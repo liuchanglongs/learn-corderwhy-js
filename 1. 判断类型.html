@@ -1,0 +1,31 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/3/21
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const arr = [];
+      const obj = {};
+      const fn = () => {};
+      console.log(Array.isArray(arr)); // true
+      console.log(Object.prototype.toString.call(arr) === "[object Array]"); // true
+      console.log(Object.prototype.toString.call(obj)); // "[object Object]"
+
+      console.log(arr instanceof Array); // true
+      console.log(fn instanceof Array); // false
+
+      console.log(typeof fn); // function
+      console.log(typeof arr); // Object
+      console.log(typeof obj); // Object
+      console.log(typeof null); // object
+      console.log(typeof undefined); // Object
+    </script>
+  </body>
+</html>

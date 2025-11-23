@@ -1,0 +1,60 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-05 11:55:02
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-05 13:28:18
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  const arry = [111, 222, 333, 444];
+  const arry1 = [111, 222, 333, 444];
+
+  function createArryInterator(arry) {
+    // 1、创建索引
+    let index = 0;
+    // 对象：next方法
+    // 返回值{done:true/false, value:值/undefined}
+    return {
+      next: function () {
+        if (index < arry.length) {
+          return {
+            done: false,
+            value: arry[index++],
+          };
+        } else {
+          return {
+            done: true,
+            value: undefined,
+          };
+        }
+      },
+    };
+  }
+
+  const arryIterator = createArryInterator(arry);
+  console.log(arryIterator.next());
+  console.log(arryIterator.next());
+  console.log(arryIterator.next());
+  console.log(arryIterator.next());
+  console.log(arryIterator.next());
+  const arry1Iterator = createArryInterator(arry1);
+  console.log(arry1Iterator.next());
+  console.log(arry1Iterator.next());
+  console.log(arry1Iterator.next());
+  console.log(arry1Iterator.next());
+  console.log(arry1Iterator.next());
+
+  console.log(Symbol.iterator);
+</script>

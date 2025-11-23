@@ -1,0 +1,73 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-06 22:55:09
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/4/7
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 宏:setTimeout1、setTimeout2
+  //微: then1 、queueMicrotask1、then3
+  // promise1、2
+
+  setTimeout(function () {
+    console.log("setTimeout1");
+    new Promise(function (resolve) {
+      resolve();
+    }).then(function () {
+      new Promise(function (resolve) {
+        resolve();
+      }).then(function () {
+        console.log("then4");
+      });
+      console.log("then2");
+    });
+  });
+
+  new Promise(function (resolve) {
+    console.log("promise1");
+    resolve();
+  }).then(function () {
+    console.log("then1");
+  });
+
+  setTimeout(function () {
+    console.log("setTimeout2");
+  });
+
+  console.log(2);
+
+  queueMicrotask(() => {
+    console.log("queueMicrotask1");
+  });
+
+  new Promise(function (resolve) {
+    resolve();
+  }).then(function () {
+    console.log("then3");
+  });
+  // ------------------------
+
+  /**
+   * promise1
+   * 2
+   * then1
+   * queueMicrotask1
+   * then3
+   * setTimeout1
+   * then2
+   * then4
+   * setTimeout2
+   * */
+</script>

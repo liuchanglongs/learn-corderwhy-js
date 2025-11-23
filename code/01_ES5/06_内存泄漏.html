@@ -1,0 +1,45 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-20 18:06:17
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-20 18:22:02
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button class="create">创建</button>
+    <button class="destory">销毁</button>
+  </body>
+</html>
+<script>
+  // 浏览器-》memory->产生快照（产生的内存）
+  function arry() {
+    // 一个小数字4bit，大的8bit。4*1024 * 1024
+    var arr = new Array(1024 * 1024).fill(100);
+    function test(params) {
+      console.log(arr);
+    }
+    return test;
+  }
+
+  var tatol = [];
+  var create = document.querySelector('.create');
+  var destory = document.querySelector('.destory');
+  create.onclick = () => {
+    for (let index = 0; index < 100; index++) {
+      tatol.push(arry());
+    }
+  };
+
+  destory.onclick = () => {
+    tatol = [];
+  };
+</script>

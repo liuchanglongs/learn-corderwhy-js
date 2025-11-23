@@ -1,0 +1,33 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-21 16:47:07
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-21 17:08:27
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function fn(num1, num2 = 1, ...args) {
+    // arguments：伪数组
+    // for  of：遍历可迭代对象
+    // 类方法、实例方法
+    // arguments转Array：for遍历、Array.from、 […arguments]
+    console.log(arguments);
+    console.log(args);
+  }
+  fn(1, 2, 5, 8);
+  // 函数默认的两个key
+  console.log(fn.name);
+  // length: 用于返回函数形参数的个数（不包括剩余参数、赋值的形参）、[].slice.call(arguments)浅拷贝
+  console.log(fn.length);
+</script>

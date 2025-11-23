@@ -1,0 +1,51 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-11 10:03:36
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-14 08:51:24
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  //  第一步：创建网络请求的AJAX对象（使用XMLHttpRequest）
+  //  第二步：监听XMLHttpRequest对象状态的变化，或者监听onload事件（请求完成时触发）；
+  //  第三步：配置网络请求（通过open方法）；
+  //  第三步：设置数据接受类型；
+  //  第四步：发送send网络请求；
+  console.log('first', 123);
+  const xhr = new XMLHttpRequest();
+  // 监听结果：执行多次
+  xhr.onreadystatechange = function (res) {
+    // if (xhr.readyState != XMLHttpRequest.DONE) return;
+    // console.log(xhr.response);
+  };
+  xhr.onprogress = (res) => {
+    // console.log(res);
+  };
+  xhr.onload = (res) => {
+    // 状态码
+    if (xhr.status === 200) {
+      console.log(xhr.response);
+    }
+  };
+  // 约定返回数据类型:默认’‘-->，普通文本 contentType
+  xhr.responseType = 'json';
+  // 第三个参数：true,异步请求，代码异步执行。false,同步请求，代码同步执行。
+  xhr.open(
+    'get',
+    'https://www.fastmock.site/mock/3df3734293ee828e14cedc9fdc6e89a7/api/roles/list',
+    true
+  );
+  xhr.send();
+  console.log('end:', 321);
+</script>

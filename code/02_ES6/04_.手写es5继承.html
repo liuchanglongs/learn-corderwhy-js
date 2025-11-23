@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  class Persion {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    msg() {
+      console.log('I am  a persion');
+    }
+    // 不会被子类和实例继承
+    static msg2() {
+      console.log('I am  a  static persion');
+    }
+  }
+  Persion.add = function () {
+    console.log('add');
+  };
+
+  class Student extends Persion {
+    constructor(name, age, grade) {
+      // 继承实例
+      super(name, age);
+
+      this.grade = grade;
+    }
+    msg3() {
+      console.log('I am  a  msg3');
+      // 调用方法
+      super.msg();
+    }
+  }
+
+  const p1 = new Persion('persion', 25);
+  const p2 = new Student('student', 25, 94);
+
+  console.log(p1);
+  console.log(p2);
+  p2.msg3();
+</script>

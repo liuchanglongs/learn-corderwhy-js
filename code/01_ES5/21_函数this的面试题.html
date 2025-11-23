@@ -1,0 +1,33 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-26 09:46:40
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-26 09:49:40
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  // 面试题1
+  var obj = {
+    data: [],
+    getData: function () {
+      setTimeout(() => {
+        var res = ['res', 'qe', 'wer'];
+        this.data.push(...res);
+      }, 1000);
+    },
+  };
+
+  obj.getData();
+</script>

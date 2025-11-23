@@ -1,0 +1,58 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-24 11:17:10
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-24 14:45:01
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 隐式原型
+  // const obj = {
+  //   name: 'lcl',
+  // };
+  // obj.__proto__.msg = 123;
+  // console.log();
+  // console.log(Object.getPrototypeOf(obj) === obj.__proto__);
+
+  //显式原型
+  // function fn(age) {
+  //   this.age = age;
+  // }
+  // console.log(fn.__proto__);
+  // console.log(Object.getPrototypeOf(fn));
+  // console.log(fn.prototype == fn.__proto__);
+
+  // const obj2 = new fn(45);
+  // console.log(obj2.__proto__ === fn.prototype);
+
+  // console.log(fn.prototype.constructor === fn);
+  // console.log(obj2.__proto__.constructor === fn);
+  // fn.prototype.aa = 123;
+  // console.log(fn.prototype);
+  // console.log(fn.prototype.constructor);
+
+  function fn2() {}
+  console.log(fn2.prototype);
+
+  const p2 = new fn2();
+  const p3 = new fn2();
+
+  p2.name = 'p2';
+  p3.name = 'p3';
+  p2.__proto__.age = 19;
+  console.log(p2.age);
+
+  p2.__proto__.age = 18;
+  console.log(p3.age);
+</script>

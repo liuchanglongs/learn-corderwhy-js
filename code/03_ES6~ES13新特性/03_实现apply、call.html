@@ -1,0 +1,57 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-31 16:31:37
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-01 10:38:06
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function fn(name, age) {
+    console.log('this:', this);
+    console.log('--->', name, age);
+  }
+
+  Function.prototype.callAndApply = function (thisArg, ...otherArgs) {
+    // undefind、null
+    if (thisArg === null || thisArg === undefined) {
+      changeThis(window);
+      return;
+    }
+    // string
+    if (typeof thisArg === 'string') {
+      changeThis(Object(thisArg));
+      return;
+    }
+    // 利用隐式改变this
+    changeThis(thisArg);
+    function changeThis(_this) {
+      // _this.fn = fn;
+      Object.defineProperty(_this, 'fn1', {
+        enumerable: false,
+        configurable: true,
+        value: _this,
+      });
+
+      _this.fn1(...otherArgs);
+      delete _this.fn;
+    }
+  };
+
+  // fn.callAndApply({ a: 1 }, ['aa', 29]);
+  // fn.callAndApply(undefined, ['aa', 29]);
+  // fn.callAndApply(null, ['aa', 29]);
+  // fn.callAndApply('null', ['aa', 29]);
+  fn.callAndApply(fn, ['aa', 29], 18);
+  fn.callAndApply(fn, ['aa', 29]);
+</script>

@@ -1,0 +1,66 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-29 22:12:16
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-29 23:01:09
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var person = {
+        _name: 'Bill',
+        get name() {
+          console.log(this); // {_name: 'Bill'}
+          return this._name;
+        },
+        set name(value) {
+          console.log(value); // 789
+          this._name = value;
+        },
+      };
+      // console.log(person.name);
+      person.name;
+      person.name = '789';
+
+      class Person2 {
+        constructor(name) {
+          this.name = name;
+        }
+        get long() {
+          return 'lll';
+        }
+        set long(val) {
+          this.name = val;
+        }
+      }
+
+      const p2 = new Person2('lcl');
+      console.log(p2);
+      console.log(p2.long);
+      p2.long = 555;
+      console.log(p2);
+
+      // 类方法:实例没有这个方法
+      class Person3 {
+        constructor(name) {
+          this.name = name;
+        }
+        static long() {
+          return 'lll';
+        }
+      }
+      const p3 = new Person3('lcl');
+      console.log(Person3.long());
+      console.log('p3-->', p3, p3.long);
+    </script>
+  </body>
+</html>

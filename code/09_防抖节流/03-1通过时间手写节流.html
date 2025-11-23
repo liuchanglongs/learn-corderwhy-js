@@ -1,0 +1,49 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 15:38:52
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-09 10:40:48
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input />
+    <button class="cancle">取消</button>
+  </body>
+</html>
+<script>
+  // 设计思想：一个函数做一件事，一个变量控制一种状态
+  // awaitTime = time - (nowTime - startTime  )
+  // 缺点：最后一个时间段，用户在中途停止，函数不会执行
+
+  const LThrottle = (fn, time) => {
+    let startTime = 0;
+    const throttle = function () {
+      const nowTime = new Date().getTime();
+      const awaitTime = time - (nowTime - startTime);
+      if (awaitTime <= 0) {
+        startTime = new Date().getTime();
+        console.log(awaitTime, time, startTime, nowTime);
+        fn.apply(this);
+      }
+    };
+
+    return throttle;
+  };
+
+  const request = LThrottle(function (arg) {
+    console.log(this.value);
+  }, 2000);
+
+  // 请求
+  const inputRef = document.querySelector('input');
+  inputRef.oninput = request;
+</script>

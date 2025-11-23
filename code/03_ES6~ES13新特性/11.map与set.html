@@ -1,0 +1,54 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-21 21:30:46
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-21 22:48:48
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 数组去重
+  const set1 = new Set();
+  set1.add('lcl');
+  // console.log(set1 instanceof Array);
+  // console.log(set1 instanceof Object);
+  // console.log(Array.from(set1));
+  // for (const iterator of set1) {
+  //   console.log(iterator);
+  // }
+
+  // 弱引用，只能添加实例化的对象
+  // const weakSet1 = new WeakSet();
+  // weakSet1.add(window);
+  // const obj = { lxl: 'lxl' };
+  // weakSet1.add(obj);
+  // console.log(weakSet1);
+  // console.log(weakSet1.has(obj));
+
+  // map存储以对象作为key的对象的数组
+  const map1 = new Map();
+  const obj = { name: 'lcl' };
+  map1.set(obj, 12);
+  map1.set(obj, 12);
+  console.log(map1);
+  // for (const iterator of map1) {
+  //   console.log(iterator);
+  // }
+
+  // map1.forEach((v, i) => {
+  //   console.log(v, i);
+  // });
+  let str = 'lxl';
+  console.log(str.padStart(4, '*'));
+  console.log(str.padEnd(14, '*'));
+</script>

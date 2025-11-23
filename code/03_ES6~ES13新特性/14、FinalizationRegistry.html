@@ -1,0 +1,42 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-24 19:01:55
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-24 19:48:08
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 垃圾回收机制不是马上就执行的
+  let obj = {
+    lcl: '456',
+  };
+  let obj1 = new WeakRef(obj);
+
+  const finalization = new FinalizationRegistry((val) => {
+    console.log(val);
+  });
+
+  finalization.register(obj, 'obj');
+
+  setTimeout(() => {
+    obj = null;
+  }, 2000);
+  // finalization.register(obj1, 'obj1');
+  setTimeout(() => {
+    console.log(obj1);
+    console.log(obj1.deref().lcl);
+  }, 10000);
+
+  // obj1 = null;
+</script>

@@ -1,0 +1,37 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-04 18:30:22
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-04 21:28:32
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  new Promise((resolve, err) => {
+    // resolve(1); // 执行 1
+    err(88);
+  });
+  // .then((res) => {
+  //   console.log(res);
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
+
+  Promise.reject().catch((err) => {
+    console.log(err);
+  });
+  Promise.resolve()
+    .then()
+    .catch((err) => {});
+</script>

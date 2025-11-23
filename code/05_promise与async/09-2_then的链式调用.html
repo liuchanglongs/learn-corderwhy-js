@@ -1,0 +1,239 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-11 14:01:11
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-13 10:56:27
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  /*
+   * @Autor: lcl
+   * @Version: 2.0
+   * @Date: 2022-10-11 14:01:11
+   * @LastEditors: lcl
+   * @LastEditTime: 2022-10-11 14:15:06
+   * @Description: lcl
+   */
+  // 设计要符合规范：Promise
+  // 1、架构设计
+  // 2、状态设计：pending、fulfilled、rejected
+  // 3、resolve、reject函数设计
+  // 4、实例方法then方法的实现
+  //    一、优化实例的then调用多次，最后的会把前面的覆盖
+  //        - 存值存成数组
+  //    二、优化通过定时器调用实例的then，无法执行
+  //        - 不为pending状态，then里面直接执行resolve、reject
+  //    三、实例方法then链式调用\异常处理
+  //    四、实例方法catch异常处理
+
+  // promise的3个状态
+  const pending = "pending";
+  const fulfilled = "fulfilled";
+  const rejected = "rejected";
+  // 控制状态的遍历
+
+  const executeFnWidthCatch = function (fn, data, resolve, reject) {
+    try {
+      const res = fn(data);
+      resolve(res);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  };
+
+  class Lpromise {
+    constructor(fn) {
+      this.onfulfilled = [];
+      this.onrejected = [];
+      this.status = pending;
+      // resolve出去的数据
+      this.value = undefined;
+      // reject出去的数据
+      this.reason = undefined;
+
+      const resolve = (...val) => {
+        // 加入微任务：让实例的then方法在执行
+        if (this.status == pending) {
+          this.value = val;
+          queueMicrotask(() => {
+            // fulfilled\reject状态不执行
+            if (this.status !== pending) return;
+            this.status = fulfilled;
+            this.onfulfilled.forEach((fn) => {
+              fn(...this.value);
+            });
+          });
+        }
+      };
+
+      const reject = (...err) => {
+        // 加入微任务：让实例的then方法在执行
+        if (this.status == pending) {
+          this.reason = err;
+          queueMicrotask(() => {
+            // fulfilled\reject状态不执行
+            if (this.status !== pending) return;
+            // console.log('->', this);
+
+            this.status = rejected;
+            this.onrejected.forEach((fn) => {
+              fn(...this.reason);
+            });
+          });
+        }
+      };
+
+      try {
+        fn(resolve, reject);
+      } catch (error) {
+        reject(error);
+      }
+
+      this.then = function (onfulfilled, onrejected) {
+        // 实现catch
+        const errFn = (err) => {
+          // console.log(err);
+          throw err;
+        };
+        onrejected = onrejected || errFn;
+        return new Lpromise((resolve, reject) => {
+          // if (!onrejected) {
+          //   console.log(1);
+          // }
+          // 1、当已经为fulfilled、rejected状态的时候，直接执行
+          if (this.status === fulfilled && onfulfilled) {
+            // try {
+            //   const res = onfulfilled(...this.value);
+            //   resolve(res);
+            // } catch (error) {
+            //   reject(error);
+            // }
+            executeFnWidthCatch(onfulfilled, ...this.value, resolve, reject);
+          }
+          if (this.status === rejected && onrejected) {
+            // try {
+            //   const res = onrejected(...this.reason);
+            //   resolve(res);
+            // } catch (error) {
+            //   reject(error);
+            // }
+            executeFnWidthCatch(onrejected, ...this.reason, resolve, reject);
+          }
+
+          if (this.status === pending) {
+            // 防止多个实例的调用只执行最的then
+            if (onfulfilled)
+              this.onfulfilled.push(() => {
+                // try {
+                //   const res = onfulfilled(...this.value);
+                //   resolve(res);
+                // } catch (error) {
+                //   reject(error);
+                // }
+                executeFnWidthCatch(
+                  onfulfilled,
+                  ...this.value,
+                  resolve,
+                  reject
+                );
+              });
+
+            if (onrejected)
+              this.onrejected.push(() => {
+                // try {
+                //   const res = onrejected(...this.reason);
+                //   resolve(res);
+                // } catch (error) {
+                //   reject(error);
+                // }
+                executeFnWidthCatch(
+                  onrejected,
+                  ...this.reason,
+                  resolve,
+                  reject
+                );
+              });
+          }
+        });
+      };
+
+      this.catch = function (onrejected) {
+        this.then(undefined, onrejected);
+      };
+    }
+  }
+
+  const promise2 = new Lpromise((resolve, reject) => {
+    // resolve('resolve');
+    reject("reject1111111111");
+  });
+
+  promise2
+    .then(
+      (res) => {
+        console.log("第一个promise的第一个then", res);
+        return "aaa";
+      }
+      // (err) => {
+      //   console.log('第一个promise的第一个err', err);
+      //   return 'bbbb';
+      // }
+    )
+    .catch((err) => {
+      console.log("catch", err);
+    });
+
+  // promise
+  //   .then(
+  //     (res) => {
+  //       console.log('第二个promise的第一个then', res);
+  //       return 'aaa';
+  //     },
+  //     (err) => {
+  //       console.log(1, err);
+  //     }
+  //   )
+  //   .then((res) => {
+  //     console.log('第二个promise的第二个then', res);
+  //   });
+
+  // js的promise
+  const promise1 = new Promise((resolve) => {
+    // resolve('resolve');
+  });
+  promise1.then(
+    (value) => {
+      console.log(1, value);
+    },
+    (reason) => {}
+  );
+
+  promise1.then(
+    (value) => {
+      console.log(2, value);
+    },
+    (reason) => {}
+  );
+
+  setTimeout(() => {
+    promise1.then(
+      (value) => {
+        console.log(3, value);
+      },
+      (reason) => {}
+    );
+  }, 0);
+</script>

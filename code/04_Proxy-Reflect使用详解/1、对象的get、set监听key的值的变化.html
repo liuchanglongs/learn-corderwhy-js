@@ -1,0 +1,48 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-25 16:43:45
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-25 17:28:51
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>123</h1>
+  </body>
+</html>
+<script>
+  // 缺点：
+  // 1、Object.defineProperty：设计就不是做监听
+  // 2、对象delete、add、in判断等，Object.defineProperty无法捕获
+  const obj = {
+    name: 'lcl',
+    age: '13',
+    sex: 'man',
+  };
+  document.querySelector('h1').innerText = obj.name;
+
+  for (const v of Object.keys(obj)) {
+    let newVal = obj[v];
+    Object.defineProperty(obj, v, {
+      set(newValue) {
+        console.log(`set监听：${newValue}`);
+        document.querySelector('h1').innerText = newValue;
+        newVal = newValue;
+      },
+      get() {
+        console.log(`get监听：`);
+        return newVal;
+      },
+    });
+  }
+
+  obj.name = 'change';
+</script>

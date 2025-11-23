@@ -1,0 +1,45 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/4/2
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body></body>
+  <script>
+    // 代码一将整个 onrejected 数组的遍历操作作为一个微任务添加到微任务队列。也就是说，当事件循环处理到这个微任务时，会连续依次执行 onrejected 数组中的所有回调函数，除非遇到异步操作（如 setTimeout）打断。
+    // 代码二：针对 onrejected 数组中的每个回调函数，都单独创建一个微任务添加到微任务队列。这意味着每个回调函数的执行可能会被其他插入的微任务或宏任务打断。
+    // queueMicrotask :加入微队列中
+    // 下列代码会产生什么问题？
+    const onrejected = [
+      (arg) => {
+        setTimeout(() => {
+          console.log("Callback 1:");
+        }, 100);
+      },
+      (arg) => console.log("Callback 2:"),
+      (arg) => console.log("Callback 3:"),
+    ];
+    // 代码一
+    queueMicrotask(() => {
+      onrejected.forEach((fn) => {
+        fn();
+      });
+    });
+    // 插入一个新的微任务
+    // queueMicrotask(() => {
+    //   console.log("New microtask");
+    // });
+    // 代码二
+    onrejected.forEach((fn) => {
+      queueMicrotask(() => {
+        fn();
+      });
+    });
+  </script>
+</html>

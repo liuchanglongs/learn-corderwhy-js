@@ -1,0 +1,61 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-09 14:51:42
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-10 16:49:08
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  var num = 123;
+  var str = 'abcdef';
+  var bool = true;
+  var arr = [1, 2, 3, 4];
+  var obj = { name: 'wenzi', age: 25 };
+  var func = function () {
+    console.log('this is function');
+  };
+  var und = undefined;
+  var nul = null;
+  var date = new Date();
+  var error = new Error();
+  var sym = Symbol(11);
+
+  // 1、typeof:null不能判断
+  console.log(typeof obj); //object
+  console.log(typeof func); // function
+  console.log(typeof und); // undefined
+  console.log(typeof date); // object
+  console.log(typeof error); // object
+  console.log(typeof nul); // object
+  console.log(typeof sym); // symbol
+
+  //2、instanceof
+  console.log(null instanceof Object); //false
+  console.log(obj instanceof Object); //true
+  console.log(date instanceof Object); //true
+
+  // 不能判断function
+  console.log(func instanceof Object); //true
+  console.log(func instanceof Function); //true
+
+  // 不能判断数组
+  console.log([] instanceof Object); //true
+  console.log([] instanceof Array); //true
+
+  // 3、constructor: 不能判断null与undefined、constructor属性是可以变更的，也会导致检测出的结果不正确
+  console.log({}.constructor === Object);
+
+  // 4、Object.prototype.toString.call(num)：把this给toString，再转字符串
+  console.log(Object.prototype.toString.apply(''));
+</script>

@@ -1,0 +1,95 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-10 20:36:34
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-10 22:20:45
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function generateOptions(data) {
+    let arry = JSON.parse(JSON.stringify(data)); // 数组深拷贝，避免影响源数据
+    var result = [];
+    for (let v of arry) {
+      //判断是否为顶层节点
+      if (v.parentId == 0) {
+        // var parent = {
+        //   //转换成el-Cascader可以识别的数据结构
+        //   label: param.name,
+        //   value: param.id,
+        // };
+        v.children = this.getchilds(v.id, arry); //获取子节点
+        result.push(v);
+      }
+    }
+    return result;
+  }
+  function getchilds(id, array) {
+    let childs = [];
+    // 赛选子节点
+    for (let arr of array) {
+      //循环获取子节点
+      if (arr.parentId == id) {
+        childs.push(arr);
+      }
+    }
+    // 孩子下面是否有孩子
+    for (let child of childs) {
+      //获取子节点的子节点
+      let childscopy = this.getchilds(child.id, array); //递归获取子节点
+      // console.log(childscopy);
+      if (childscopy.length > 0) {
+        child.children = childscopy;
+      }
+    }
+    return childs;
+  }
+
+  // console.log(t);
+  function arrToTree(data) {
+    let nData = JSON.parse(JSON.stringify(data)); // 数组深拷贝，避免影响源数据
+    let result = [];
+    let map = {};
+    // 遍历数组 把每一项的引用放入map对象里:生产对象
+    nData.forEach((item) => {
+      map[item.id] = item;
+    });
+
+    nData.forEach((item) => {
+      // 再次遍历数组 决定item的去向：是否有父级
+      let parent = map[item.parentId];
+      if (parent) {
+        // 如果 map[item.parentId] 有值 则 parent 为 item 的父级
+        // 判断 parent 里有无children 如果没有则创建 如果有则直接把 item push到children里
+        let arry = parent.children || (parent.children = []);
+        arry.push(item);
+      } else {
+        // 如果 map[item.pid] 找不到值 说明此 item 为 第一级
+        result.push(item);
+      }
+    });
+    return result;
+  }
+  var t = [
+    { id: 7, name: 'name7', parentId: 7 },
+    { id: 3, name: 'name3', parentId: 2 },
+    { id: 5, name: 'name5', parentId: 4 },
+    { id: 4, name: 'name4', parentId: 0 },
+    { id: 1, name: 'name1', parentId: 0 },
+    { id: 2, name: 'name2', parentId: 1 },
+    { id: 6, name: 'name6', parentId: 5 },
+  ];
+
+  console.log('generateOptions:', generateOptions(t));
+  console.log('arrToTree:', arrToTree(t));
+</script>

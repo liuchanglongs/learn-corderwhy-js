@@ -1,0 +1,29 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-21 22:51:07
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-11-08 14:56:17
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  const info = (time) => (type) => (msg) =>
+    console.log(`时间：${time};方式：${type};信息：${msg}`);
+
+  const type = info('2022-08-21');
+
+  const time1 = type('submit');
+  const time2 = type('clear');
+  time1('提交了');
+  time2('清空了');
+</script>

@@ -1,0 +1,65 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-05 21:38:01
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-05 21:57:53
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  // 1、重构对象的生成器函数
+  // const obj = {
+  //   name: 'lcl2',
+  //   age: 172,
+  //   height: 1802,
+  //   [Symbol.iterator]: function* () {
+  //     // const arry = Object.keys(this);
+  //     // const arry = Object.values(this);
+  //     const arry = Object.entries(this);
+  //     for (let index = 0; index < arry.length; index++) {
+  //       yield arry[index];
+  //     }
+  //   },
+  // };
+  // 优化：yield *跟可迭代的对象
+  const obj = {
+    name: 'lcl2',
+    age: 172,
+    height: 1802,
+    *[Symbol.iterator]() {
+      // const arry = Object.keys(this);
+      // const arry = Object.values(this);
+      const arry = Object.entries(this);
+      yield* arry;
+    },
+  };
+
+  for (const iterator of obj) {
+    console.log(iterator);
+  }
+
+  // 2、要求没调用一次函数输出[3,9)的数字
+  function* fn(start, end) {
+    for (let index = start; index < end; index++) {
+      yield index;
+    }
+  }
+  const number = fn(3, 9);
+  console.log(number.next());
+  console.log(number.next());
+  console.log(number.next());
+  console.log(number.next());
+  console.log(number.next());
+  console.log(number.next());
+</script>

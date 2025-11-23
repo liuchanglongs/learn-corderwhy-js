@@ -1,0 +1,116 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-05 13:32:29
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-05 18:14:29
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // o对象本身不是可迭代对象
+  // const obj = {
+  //   name: [111, 222, 333, 444],
+  // };
+
+  // 迭代对象一定有一个Symbol.iterator方法--->迭代原理
+  const arry = [111, 222, 333];
+  const arryInterator = arry[Symbol.iterator]();
+  // console.log(arryInterator.next());
+  // console.log(arryInterator.next());
+  // console.log(arryInterator.next());
+  // console.log(arryInterator.next());
+
+  // 构造一个可迭代对象.name
+  // 1、创建属性为Symbol.iterator的方法（固定）
+  // 2、返回一个迭代器对象
+  const obj = {
+    name: [111, 222, 333, 444],
+    [Symbol.iterator]() {
+      let index = 0;
+      return {
+        next: () => {
+          if (index < this.name.length) {
+            return {
+              done: false,
+              value: this.name[index++],
+            };
+          } else {
+            return {
+              done: true,
+              value: undefined,
+            };
+          }
+        },
+      };
+    },
+  };
+  // 遍历可迭代对象
+  // for (const iterator of obj) {
+  //   console.log(iterator);
+  // }
+
+  // 构造一个可迭代对象
+  Object.prototype[Symbol.iterator] = function () {
+    // const arry = Object.keys(this);
+    // const arry = Object.values(this);
+    const arry = Object.entries(this);
+    let index = 0;
+    return {
+      next() {
+        if (index < arry.length) {
+          return {
+            done: false,
+            value: arry[index++],
+          };
+        } else {
+          return {
+            done: true,
+            value: undefined,
+          };
+        }
+      },
+    };
+  };
+
+  const obj1 = {
+    name: 'lcl2',
+    age: 172,
+    height: 1802,
+    // [Symbol.iterator]() {
+    //   // const arry = Object.keys(this);
+    //   // const arry = Object.values(this);
+    //   const arry = Object.entries(this);
+    //   let index = 0;
+    //   return {
+    //     next() {
+    //       if (index < arry.length) {
+    //         return {
+    //           done: false,
+    //           value: arry[index++],
+    //         };
+    //       } else {
+    //         return {
+    //           done: true,
+    //           value: undefined,
+    //         };
+    //       }
+    //     },
+    //   };
+    // },
+  };
+  for (const iterator of obj1) {
+    console.log(iterator);
+  }
+
+  console.log(obj1);
+</script>

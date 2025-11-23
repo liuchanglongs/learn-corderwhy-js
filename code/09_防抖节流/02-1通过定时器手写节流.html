@@ -1,0 +1,47 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 15:38:52
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-09 10:12:08
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input />
+    <button class="cancle">取消</button>
+  </body>
+</html>
+<script>
+  // 设计思想：一个函数做一件事，一个变量控制一种状态
+  // 节流：一般允许输入第一次立即执行，最后一个阶段不执行
+  // 缺点：
+  // 1、第一次输入一个字符串，默认不执行。
+  // 2、最后一个阶段不执行没到时间，不执行函数。（用处：游戏飞机射击，到一定的间隔后执行），且不好控制
+  const LThrottle = (fn, time) => {
+    let timeout = null;
+    const throttle = function () {
+      if (timeout) return '';
+      timeout = setTimeout(() => {
+        fn.apply(this);
+        timeout = null;
+      }, time);
+    };
+    return throttle;
+  };
+
+  const request = LThrottle(function (arg) {
+    console.log(this.value);
+  }, 2000);
+
+  // 请求
+  const inputRef = document.querySelector('input');
+  inputRef.oninput = request;
+</script>

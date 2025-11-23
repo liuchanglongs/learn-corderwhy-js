@@ -1,0 +1,38 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/3/21
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const fn = (a, b, c) => {
+        return a + b + c;
+      };
+
+      //   1. 创建一个函数，第一个参数是函数
+      //   2. 返回一个函数 fn1
+      //   3. fn1(1), 返回一个函数，并且接受下个参数
+      //   4. fn1(1)(2), 返回一个函数，并且接受下个参数
+
+      function curring(fn) {
+        return function curringfn(...arg) {
+          if (fn.length <= arg.length) {
+            return fn(...arg);
+          } else {
+            return function (...arg1) {
+              return curringfn(...arg1, ...arg);
+            };
+          }
+        };
+      }
+      const fn1 = curring(fn);
+      console.log(fn1(1)(2)(2));
+    </script>
+  </body>
+</html>

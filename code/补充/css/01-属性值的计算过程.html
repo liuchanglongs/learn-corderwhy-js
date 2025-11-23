@@ -1,0 +1,96 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2023-03-23 16:21:21
+ * @LastEditors: lcl
+ * @LastEditTime: 2023-03-26 18:21:05
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    /*
+     * ccs:属性值的计算过程 视觉格式化模型
+     * 1.属性值的计算过程：元素所有css属性没有值到有值的过程
+     * - 代码部分样式 浏览器默认样式
+     * - 1. 确定声明值：找到没有冲突的样式直接作为计算后的样式
+     * - 2，层叠：解决冲突->赋值
+     * - 比较重要性->重要性从高到低:带有 important 的作者样式；带有 important 的默认样式；作者样式；默认样式
+     * - 比较特殊性->权重比较(* style id class 伪类 元素 伪元素)，样式权重高的取赋值
+     * - 比较源次序-> 相同样式属性，后面覆盖前面的
+     * - 3.继承：该属性值还没有被赋值的情况下，若可以继承则继承
+     * - 4. 使用默认值：对仍然没有值的属性，直接使用默认值
+     * - 注意：该顺序并不是缺一不可的。1、2步骤是可以影响3 4 步骤的。(比如浏览器设置了默认值，代码也没用给这个属性赋值)
+     *
+     * - 解决css不继承的问题：使用父元素的值inherit
+     * - css设置默认值：initial
+     * - 清除浏览器默认样式：unset（跳过1、2步）
+     * - 恢复浏览器默认样式：revert（还原到具有由浏览器或用户创建的自定义样式表）
+     *
+     * 2.视觉格式化模型
+     */
+  </script>
+  <body>
+    <!-- 案例：1 -->
+    <!--
+     问题：contaier的color设置为red。a标签为啥没有继承样式？
+     a标签color已经确定声明值，直接跳过继承步骤；
+     inherit：直接对应父元素的属性，直接拿过来用，属于代码部分样式，不属于继承步骤
+    -->
+    <div class="contaier">
+      <p>点击下面的链接即可跳转</p>
+      <a href>立即跳转</a>
+    </div>
+    <hr />
+    <!-- 案例二 -->
+    <!--
+     问题：contaier的font-size: 24px;。input标签为啥没有继承样式？
+     浏览器默认确定声明值
+    -->
+    <div class="contaier2">
+      <label for="">name</label>
+      <input type="text" />
+    </div>
+    <!-- 案例三 -->
+    <!-- 使代码利于维护： -->
+    <div class="contaier3">
+      <div class="contaier4"></div>
+    </div>
+  </body>
+  <style>
+    .contaier {
+      color: red;
+    }
+    .contaier a {
+      /* 相当于：color:red */
+      color: inherit;
+    }
+    .contaier2 {
+      font-size: 24px;
+    }
+    .contaier2 input {
+      /* font-size: 24px; */
+      font-size: inherit;
+    }
+
+    .contaier3 {
+      width: 80%;
+      height: 500px;
+      background-color: red;
+      margin: auto;
+    }
+    .contaier4 {
+      /* width: 80%; */
+      width: inherit;
+      height: 80%;
+      background-color: blue;
+      margin: inherit;
+    }
+  </style>
+</html>

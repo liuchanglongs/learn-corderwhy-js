@@ -1,0 +1,44 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-04 12:55:53
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-04 14:57:14
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  // construct的作用。把Persion的显示原型给s1。构造函数继承
+  function Persion(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  function Student(name, age) {
+    // Persion.call(this, name, age);
+    const obj = Reflect.construct(Persion, [name, age], Persion);
+    console.log(obj);
+    return obj;
+  }
+  const s1 = new Student('lcl', 18);
+
+  console.log(s1, s1.__proto__);
+  console.log(Persion.prototype === s1.__proto__);
+
+  const obj = {
+    names: 'lcl',
+  };
+  // console.log(Reflect.has(obj, 'names'));
+  // console.log(Reflect.deleteProperty(obj, 'names'));
+  console.log(obj);
+</script>

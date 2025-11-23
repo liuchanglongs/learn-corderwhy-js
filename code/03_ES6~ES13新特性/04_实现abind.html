@@ -1,0 +1,51 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-01 09:45:40
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-01 10:37:09
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function fn(name, age) {
+    console.log(this, name, age);
+  }
+
+  Function.prototype.Lbind = function (thisArg, ...otherArgs) {
+    let changeThis = (_this) => {
+      return (...data) => {
+        Object.defineProperty(_this, 'fn1', {
+          enumerable: false,
+          configurable: true,
+          value: this,
+        });
+        _this.fn1(...[...otherArgs, ...data]);
+        delete _this.fn;
+      };
+    };
+    // undefind、null
+    if (thisArg === null || thisArg === undefined) {
+      return changeThis(window);
+    }
+    // string
+    if (typeof thisArg === 'string') {
+      return changeThis(Object(thisArg));
+    }
+    // 利用隐式改变this
+    return changeThis(thisArg);
+  };
+
+  const newFn = fn.Lbind(null, 'lcl');
+  newFn(19);
+  // newFn(20);
+</script>

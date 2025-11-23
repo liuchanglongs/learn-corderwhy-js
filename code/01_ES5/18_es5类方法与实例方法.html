@@ -1,0 +1,32 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-27 17:49:16
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-27 21:09:23
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function Name() {
+    console.log(this);
+  }
+  Name.getName = function (obj) {
+    console.log(this.prototype.name);
+  };
+  Name.prototype.name = 'lcl';
+  Name.getName.call(Name);
+
+  const obj = new Name();
+  console.log(obj.name); // lcl
+  obj.getName(); //obj.getName is not a function
+</script>

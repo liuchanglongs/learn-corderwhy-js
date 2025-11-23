@@ -1,0 +1,57 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-06 23:16:52
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-11-08 13:13:25
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 微：
+  // 鸿：setTimeout1  setTimeout2
+
+  // start   getData requestData
+
+  console.log('start');
+  function requestData(url) {
+    console.log('requestData');
+    return url;
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     console.log('setTimeout2');
+    //     resolve(url);
+    //   }, 2000);
+    // });
+  }
+
+  // function getData() {
+  //   console.log('getData');
+  //   requestData('lcl').then((res) => {
+  //     console.log(res);
+  //   });
+  //   console.log('getData end');
+  // }
+
+  async function getData() {
+    console.log('getData');
+    const res = await requestData('lcl');
+    console.log(res);
+    console.log('getData end');
+  }
+  setTimeout(() => {
+    console.log('setTimeout1');
+  });
+  getData();
+
+  console.log('end');
+</script>

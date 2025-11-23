@@ -1,0 +1,42 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-11 11:10:48
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-11 11:27:29
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  const xhr = new XMLHttpRequest();
+  xhr.onload = () => {
+    console.log(xhr.response);
+  };
+  xhr.responseType = 'json';
+  xhr.ontimeout = () => {
+    console.log('过期cancel');
+  };
+  xhr.onabort = () => {
+    console.log('onabort');
+  };
+  // 超时时间
+  xhr.timeout = 2;
+
+  xhr.open(
+    'get',
+    'https://www.fastmock.site/mock/3df3734293ee828e14cedc9fdc6e89a7/api/dept/list'
+  );
+  xhr.send();
+
+  // 手动取消
+  xhr.abort();
+</script>

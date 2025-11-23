@@ -1,0 +1,165 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-24 21:58:46
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/3/26
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body></body>
+</html>
+<script>
+  function Persions(name, age, sex) {
+    this.name = name;
+    this.age = age;
+    this.sex = sex;
+  }
+  Persions.prototype.msg = () => {
+    console.log("wo --- ---Persions");
+  };
+
+  function Students(name, age, books) {
+    this.name = name;
+    this.age = age;
+    this.books = books;
+  }
+
+  // 继承：Students继承Persions---》Students的prototype -->Persions的prototype
+
+  // 1. 原型式继承
+  // 特点：相当于复制一个对象， 用函数进行包装
+  // 缺点：引用类型的数据，一个子实例修改后，会导致所有的子实例的该数据都被修改。
+  function child(obj) {
+    function F() {}
+    F.prototype = obj; //obj为父类的实例对象 相当于F的原型对象指向父类的实例对象
+    return new F(); //实例化了F 返回了F的实例对象
+  }
+
+  let obj = {
+    name: "lhhh",
+    age: 18,
+    like: ["a", "b"],
+    showName() {
+      console.log("my name is:", this.name);
+    },
+  };
+
+  const newChild = child(obj); //实例对象上不存在name 根据原型链往_proto_上找 找到了name
+  // const newChild2 = child(obj); //实例对象上不存在name 根据原型链往_proto_上找 找到了name
+  // newChild.name = "httt";
+  // newChild.like.push("c");
+  console.log(newChild); //like变为[a,b,c] name:'httt'
+  // console.log(newChild2); //like变为[a,b,c]  name:'lhhh'
+
+  // 2. 原型链继承
+  // 缺点：
+  // 1、耦合性太强，父类新增原型方法/原型属性，子类都能访问到；Persions的方法改变，全都改变；来自原型对象的所有属性被所有实例共享
+  // 2. 子类继承父类的属性和方法是将父类的私有属性和公有方法都作为自己的公有属性和方法
+  // 3. 无法实现多继承
+  // 4.创建子类实例时，无法向父类构造函数传参
+  // 方法一：直接Students的prototype  = Persions的prototype
+  Students.prototype = Persions.prototype;
+  const stu1 = new Students("lcl", 16, "math");
+  console.log("原型链继承1", stu1);
+  stu1.msg(); // wo --- ---Persions
+
+  // 方法二：直接Students的prototype  = Persions的实例
+  // 缺点：
+  // 1、在Students的实例化的对象看不到公用方法(msg)。
+  // 2、能拿到per2的key值，但是不能通过stu2创建自己想要的，
+  // 3、不能给Person传递参数（让每个stu有自己的属性），因为这个对象是一次性创建的（没办法定制化）。
+  const per2 = new Persions("老师", 18, "man");
+  Students.prototype = per2;
+  const stu2 = new Students("lcl", 16, "math");
+  console.log("原型链继承2", stu2);
+  stu2.msg(); // wo --- ---Persions
+
+  // 3. 构造函数继承
+  // 这种方式关键在于:在子类型构造函数中通用 call()调用父类型构造函数
+  // 特点：
+  // 1. 只继承了父类构造函数的属性，
+  // 2. 可以给父类构造函数传参，
+  // 3. 可以实现多继承(call 多个父类对象)
+  // 缺点：
+  // 1. 只能继承父类构造函数的属性，不能继承原型属性和方法。
+  // 2. 每实例化一个薪实例，就会调用一次父类构造函数
+  // 3.没有继承父类构造函数的原型，
+  function Students1(name, age, books) {
+    Persions.call(this, name, age);
+    this.books = books;
+  }
+  const stu3 = new Students1("lcl", 16, "math");
+  console.log("构造函数继承", stu3);
+  // stu3.msg(); // 没有这个方法
+
+  // 4. 构造函数继承+原型链继承(组合借用继承)：
+  // 特点：结合1、2
+  // 缺点：
+  // 1、Persions父类函数要被调用两次： 一次在创建子类原型的时候; 另一次在子类构造函数内部(也就是每次创建子类实例的时候)
+  // 2、所有的子类实例事实上会拥有两份父类的属性：一份是子类的，一份是proptype指向父类的
+  function Students1(name, age, books) {
+    Persions.call(this, name, age);
+    this.books = books;
+  }
+  const per3 = new Persions();
+  Students1.prototype = per3;
+  const stu4 = new Students1("lcl", 16, "math");
+  console.log("组合借用继承", stu4);
+  stu4.msg(); // 没有这个方法
+
+  // 5.寄生式继承:1、拿到父级的protoType。2、继承父级生成孩子的key:属性
+  // 建一个仅仅用于封装继承过程的函数，然后在内部以某种方式增强对象，最后返回对象
+  // 1、原型链式继承函数
+  // function object(obj) {
+  //   function FnC() {}
+  //   FnC.prototype = obj.prototype;
+  //   return new FnC();
+  // }
+  // 2、继承对象
+  // function object(obj) {
+  //   const newObj = {};
+  //   // 有兼容问题
+  //   Object.setPrototypeOf(newObj, obj.prototype);
+  //   return newObj;
+  // }
+
+  // 6. 寄生组合式继承(寄生+构造函数)
+  // 优点：实现了方法的复用。同时，由于每个子类实例都有自己独立的属性副本，不会影响其他实例。
+  function inheritProtoType(sonType, parentType) {
+    // 1、无兼容问题
+    function FnC() {
+      this.lcl = "lcl";
+    }
+    FnC.prototype = parentType.prototype;
+    let obj = new FnC();
+    sonType.prototype = obj;
+
+    //2、有兼容问题
+    // sonType.prototype.__proto__ = parentType.prototype;
+    // sonType.prototype = parentType.prototype;
+    //3、有兼容问题
+    // Object.setPrototypeOf(sonType.prototype, parentType.prototype);
+
+    // console.log(sonType.prototype);
+    // console.log(sonType.prototype.__proto__);
+    // sonType.prototype.constructor = sonType;
+  }
+  function Students2(name, age, books) {
+    Persions.call(this, name, age);
+    this.books = books;
+  }
+
+  inheritProtoType(Students2, Persions);
+  const stu6 = new Students2("lcl", 16, "math");
+  console.log("stu6", stu6);
+  stu4.msg();
+</script>

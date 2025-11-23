@@ -1,0 +1,52 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-25 17:29:35
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-25 17:43:38
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  // 1、new Proxy
+  // 2、一切操作都在这个实例上面
+  const obj = {
+    name: 'lcl',
+    age: '13',
+    sex: 'man',
+  };
+
+  const proxyObj = new Proxy(obj, {
+    get(target, key, receiver) {
+      console.log('get监听：：---》', target, key, receiver);
+      return target[key];
+    },
+    set(target, key, value, receiver) {
+      console.log('set监听：：---》', target, key, value, receiver);
+      target[key] = value;
+    },
+    deleteProperty(target, key) {
+      console.log(target, key);
+      delete target[key];
+    },
+    has(target, key) {
+      console.log(target, key);
+      return key in target;
+    },
+  });
+
+  // proxyObj.name1 = 'lcl2';
+  // delete proxyObj.name1;
+  // console.log(obj, proxyObj);
+  // console.log('name' in proxyObj);
+</script>

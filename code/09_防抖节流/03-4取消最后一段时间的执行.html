@@ -1,0 +1,86 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 15:38:52
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-09 14:15:01
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input />
+    <button class="cancle">取消</button>
+  </body>
+</html>
+<script>
+  // 设计思想：一个函数做一件事，一个变量控制一种状态
+  // awaitTime = time - (nowTime - startTime  )
+  // 缺点：
+  // 最后一个时间段，用户在中途停止，函数不会执行
+  // 解决：1、从开始加入一个定时器，最后没有执行就执行这个定时器
+  //      2、从最后阶段加入一个定时器，最后没有执行就执行这个定时器 awaitTime>0
+
+  // 功能3、取消最后一段时间函数的执行
+
+  const LThrottle = (fn, time, { loading = true, trailing = false } = {}) => {
+    let startTime = 0;
+    let timer = null;
+
+    const throttle = function () {
+      const nowTime = new Date().getTime();
+      if (!loading && startTime === 0) {
+        startTime = nowTime;
+      }
+      const awaitTime = time - (nowTime - startTime);
+      if (awaitTime <= 0) {
+        if (timer) {
+          clearTimeout(timer);
+          timer = null;
+        }
+        console.log('---‘时间--:', nowTime, startTime);
+        startTime = nowTime;
+        fn.apply(this);
+        return;
+      }
+      if (awaitTime > 0 && trailing && !timer) {
+        timer = setTimeout(() => {
+          startTime = new Date().getTime();
+          console.log('---定时器--', awaitTime);
+          timer = null;
+          fn.apply(this);
+          clearTimeout(timer);
+        }, time);
+      }
+      console.log('end');
+    };
+    throttle.cancel = function () {
+      console.log(5);
+      clearTimeout(timer);
+      timer = null;
+    };
+    return throttle;
+  };
+
+  const request = LThrottle(
+    function (arg) {
+      console.log(this.value);
+    },
+    3000,
+    { trailing: true }
+  );
+
+  // 请求
+  const inputRef = document.querySelector('input');
+  inputRef.oninput = request;
+
+  // 取消
+  const cancel = document.querySelector('.cancle');
+  cancel.onclick = request.cancel;
+</script>

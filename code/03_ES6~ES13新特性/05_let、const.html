@@ -1,0 +1,73 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-01 14:45:29
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-02 14:28:46
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 在全局通过var来声明一个变量，事实上会在window上添加一个属性：
+  var msg = 'msg'; // 添加到环境记录（包含window）--》声明环境记录
+  let msg2 = 'msg2';
+  const msg3 = 'msg3';
+  // 暂停性死区-->代码的执行顺序有关：let\const先被创建但是不能访问
+  // 暂停性死区形成后，这个区域的标识符不能访问
+  function foo() {
+    // console.log(msg);
+    // console.log(msg2); //报错
+    // console.log(msg3); //报错
+    var msg = '123';
+    let msg2 = '888';
+    const msg3 = '999';
+  }
+  foo();
+
+  // 作用域：window、函数（外部能访问到，浏览器优化）、let、const、class
+
+  // 非严格模式下
+
+  // console.log(lcl); // undefined
+  // console.log(lcl2); //报错
+  // console.log(lcl3); //报错
+  // console.log(lcl4); //undefined
+  // console.log(lcl5); //报错
+  debugger;
+  let lcl8 = 'lcl8';
+  {
+    var lcl = 'lcl';
+    let lcl2 = 'lcl2';
+    const lcl3 = 'lcl3';
+    function lcl4() {
+      console.log('lcl4');
+    }
+    class lcl5 {}
+  }
+
+  // console.log(lcl); // lcl
+  // console.log(lcl2); //报错
+  // console.log(lcl3); //报错
+  // console.log(lcl4()); //lcl4
+  // console.log(lcl5); //报错
+
+  // let、const
+  // console.log(aa); //Cannot access 'aa' before initialization
+  // const aa = 'aa';
+  // function aaa2(params) {
+  //   console.log(aa); // Cannot access 'aa' before initialization
+  //   const aa = 'aa1';
+  //   console.log(aa); // aa1
+  // }
+  // aaa2();
+  // console.log(aa); // aa
+</script>

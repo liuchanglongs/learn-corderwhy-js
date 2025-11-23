@@ -1,0 +1,46 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/3/24
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<script>
+  const obj = {
+    name: 'lcl',
+    age: '13',
+    sex: 'man',
+  };
+  const proxyObj = new Proxy(obj, {
+    get(target, p, receiver) {
+      // console.log(target, p, receiver)
+      return target[p]
+    },
+    set(target, p, newValue, receiver) {
+      // console.log('newValue', newValue)
+      target[p] = newValue
+    },
+    deleteProperty(target, p){
+      delete target.name
+    },
+    has(target, p){
+      console.log(target, )
+      return p in target
+    }
+  })
+  //  console.log( proxyObj.name)
+  // proxyObj.name = 'proxyObj.name'
+  // delete proxyObj.name
+  
+  console.log('name' in proxyObj)
+
+</script>
+</body>
+
+</html>

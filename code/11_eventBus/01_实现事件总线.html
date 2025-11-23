@@ -1,0 +1,93 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-10 20:40:03
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-10 22:13:25
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>点击</button>
+  </body>
+</html>
+<script>
+  // vue2的事件总线
+  //const eventBus =  new eventBus()
+  // 发送
+  // eventBus.emit(name, data)
+  // 监听
+  // eventBus.on(name, eventFn)
+  class LeventBus {
+    constructor() {
+      this.configMap = {};
+    }
+
+    // 发布者
+    emit(name, ...arg) {
+      const map = this.configMap[name];
+      if (!map) return;
+      for (const fn of map) {
+        fn(...arg);
+      }
+    }
+
+    // 订阅着
+    on(name, eventFn) {
+      const map = this.configMap[name];
+      if (map) {
+        map.push(eventFn);
+      } else {
+        this.configMap[name] = [eventFn];
+      }
+    }
+
+    // 关闭,
+    off(name, fn) {
+      const fns = this.configMap[name];
+      if (fns) {
+        const deep = (arry) => {
+          const isDeep = arry.findIndex((v) => {
+            return v === fn;
+          });
+          if (isDeep != -1) {
+            fns.splice(isDeep, 1);
+            deep(fns);
+          }
+        };
+        if (fns.length) delete this.configMap[name];
+      }
+    }
+  }
+
+  const eventBus = new LeventBus();
+
+  const button = document.querySelector('button');
+  button.onclick = function () {
+    eventBus.emit('one', 'lcl', 19);
+    eventBus.emit('two', 'two', 'two');
+  };
+  const one = (...arg) => {
+    console.log(...arg);
+  };
+  eventBus.on('one', one);
+
+  eventBus.on('one', (...arg) => {
+    console.log(...arg);
+  });
+
+  const two = (...arg) => {
+    console.log('-', ...arg);
+  };
+  eventBus.on('two', two);
+  setTimeout(() => {
+    eventBus.off('two', one);
+  }, 5000);
+</script>

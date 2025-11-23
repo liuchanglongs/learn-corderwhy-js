@@ -1,0 +1,57 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-23 21:21:21
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-23 21:50:32
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 'use strict';
+  const obj = {
+    name: 'lcl',
+  };
+
+  // var _name = obj.name;
+  // Object.defineProperty(obj, 'name', {
+  //   // configurable: false,
+  //   // enumerable: false,
+  //   // writable: false,
+  //   // value: 'ppp',
+  //   set(val) {
+  //     console.log('set:', val);
+  //     _name = val;
+  //   },
+  //   get() {
+  //     console.log('_-');
+  //     return _name;
+  //   },
+  // });
+
+  // delete obj.name;
+  // console.log(obj);
+  // console.log(Object.keys(obj));
+  // obj.name = 'lm';
+  // console.log(obj);
+  // obj.name = '100';
+  // obj.name = '100';
+  // obj.name = '100';
+
+  // console.log(obj.name);
+  // console.log(Object.getOwnPropertyDescriptor(obj, 'name'));
+  // console.log(Object.getOwnPropertyDescriptors(obj));
+
+  Object.preventExtensions(obj);
+  obj.a = 'oo';
+  console.log(obj);
+</script>

@@ -1,0 +1,71 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-04 10:35:56
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-04 14:54:40
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  const obj = {
+    // _age 和 _name前面加上一个下划线标识此属性是一个私有属性，
+    // 不是对外公开的的一个接口，这个是约定促成的惯例。obj.name/obj._name都能取到
+    // 同时，如果与set或get函数同名会导致死循环抛出栈溢出错误。
+    _name: 'lcl',
+    age: '18',
+    // 利用访问器属性监听属性操作
+    get name() {
+      console.log('利用访问器属性监听属性操作get', this);
+      return this._name;
+    },
+    set name(val) {
+      console.log('利用访问器属性监听属性操作set');
+      this._name = val;
+    },
+  };
+
+  // 利用设置属性描述符监听属性操作：
+  //  优点可以批量设置，可以设置其它描述符。监听优先级比访问器设置高
+  // Reflect.defineProperty(obj, 'name', {
+  //   // 属性的get、set方法
+  //   get() {
+  //     console.log('2');
+  //     return '456';
+  //   },
+  //   set(value) {},
+  // });
+
+  const objProxy = new Proxy(obj, {
+    // receiver === objProxy
+    get(target, key, receiver) {
+      console.log('get', target, key, receiver, receiver === objProxy);
+      // 优化：1、Proxy：操作本身，不想直接操作原来对象
+      // return target[key];
+      // 3 、监听obj.name获取值设置值
+      return Reflect.get(target, key, receiver);
+    },
+    set(target, key, newValue, receiver) {
+      console.log('set', target, key, newValue, receiver);
+      // 2、抛出错误提示
+      Reflect.set(target, key, newValue, receiver);
+      if (!Reflect.set(target, key, newValue)) {
+        throw new Error('fail');
+      }
+    },
+  });
+
+  // console.log(obj.name); // objProxy捕获不到
+  console.log(objProxy.name);
+  // objProxy.name = '9090';
+</script>

@@ -1,0 +1,154 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/3/24
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 1.
+      //   var name = "window";
+      //   var person = {
+      //     name: "pp",
+      //     sayName: function () {
+      //       console.log(this);
+      //     },
+      //   };
+      //   function sayName() {
+      //     var sss = person.sayName;
+      //     sss();
+      //     person.sayName();
+      //     let b;
+      //     (b = person.sayName)(); // 解释这个代码
+      //   }
+      //   sayName();
+      //   window   person window
+
+      // 2.
+      //   var name = "window";
+      //   var person1 = {
+      //     name: "person1",
+      //     foo1: function () {
+      //       console.log("foo1", this);
+      //     },
+      //     foo2: () => {
+      //       console.log("foo2", this);
+      //     },
+      //     foo3: function () {
+      //       console.log("foo3", this);
+      //       return function () {
+      //         console.log("foo3", this);
+      //       };
+      //     },
+      //     foo4: () => {
+      //       return () => {
+      //         console.log("foo4", this);
+      //       };
+      //     },
+      //   };
+      //   var person2 = {
+      //     name: "person2",
+      //   };
+      //   person1.foo1(); // person1
+      //   person1.foo1.call(person2); // person2
+
+      //   person1.foo2(); // window
+      //   person1.foo2.call(person2); // window
+
+      // 做错
+      //   person1.foo3()(); // window
+      //   person1.foo3.call(person2)(); // window
+      //   person1.foo3().call(person2); // person2
+
+      //   person1.foo4()(); // window
+      //   person1.foo4.call(person2)(); // window
+      //   person1.foo4().call(person2); // window
+
+      //   3.
+      //   var name = "window";
+      //   function Person(name) {
+      //     this.name = name;
+      //     this.foo1 = function () {
+      //       console.log("foo1", this.name);
+      //     };
+      //     this.foo2 = () => {
+      //       console.log("foo2", this.name);
+      //     };
+      //     this.foo3 = function () {
+      //       return function () {
+      //         console.log("foo3", this?.name);
+      //       };
+      //     };
+      //     this.foo4 = () => {
+      //       console.log(this);
+      //       return () => {
+      //         console.log("foo4", this?.name);
+      //       };
+      //     };
+      //   }
+      //   var person1 = new Person("person1");
+      //   var person2 = new Person("person2");
+
+      //   person1.foo1(); // person1
+      //   person1.foo1.call(person2); // person2
+
+      //   person1.foo2(); // person1
+      //   person1.foo2.call(person2); // person1
+
+      //   person1.foo3()(); // window
+      //   person1.foo3.call(person2)(); // window
+      //   person1.foo3().call(person2); // person2
+      // z做错
+      //   person1.foo4()(); // person1
+      //   person1.foo4.call(person2)(); // person1
+      //   person1.foo4().call(person2); // person1
+
+      //   // 4.
+      //   var name = "window";
+      //   function Person(name) {
+      //     this.name = name;
+      //     this.obj = {
+      //       name: "obj",
+      //       foo1: function () {
+      //         return function () {
+      //           console.log("foo1", this?.name);
+      //         };
+      //       },
+      //       foo2: () => {
+      //         return () => {
+      //           console.log("foo2", this?.name);
+      //         };
+      //       },
+      //     };
+      //   }
+      //   var person1 = new Person("person1");
+      //   var person2 = new Person("person2");
+      //   person1.obj.foo1()(); //window
+      //   person1.obj.foo1.call(person2)(); //window
+      //   person1.obj.foo1().call(person2); // person2
+
+      //   person1.obj.foo2()(); // person1
+      //   person1.obj.foo2.call(person2)(); // person1
+      //   person1.obj.foo2().call(person2); // person1
+
+      // 5.
+      var obj = {
+        name: "why",
+        bar: function () {
+          console.log("bar:", this); //this ->  window
+        },
+      };
+      function test(fn) {
+        console.log("test:", this); //this ->  window
+        fn();
+      }
+      test(obj.bar);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-10 16:47:21
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-10 16:54:32
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  // 判定空对象：
+  // 1、Object.keys({}).length === 0
+  console.log(Object.keys({}).length === 0);
+  // 2、JSON.stringify({}) ==='{}'
+  console.log(JSON.stringify({}) === '{}'); //true
+  // 3、包括返回设置的不可枚举的key
+  var stuObj = {
+    name: 'cxy',
+  };
+  Object.defineProperty(stuObj, 'age', {
+    value: '18',
+    enumerable: false,
+  });
+  console.log(Object.keys(stuObj));
+  console.log(Object.getOwnPropertyNames(stuObj));
+
+  console.log();
+</script>

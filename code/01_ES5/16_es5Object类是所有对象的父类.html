@@ -1,0 +1,93 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-26 21:39:07
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-26 23:25:05
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 16_Object类是所有对象的父类
+  // Object.prototype.msg = 'hallo word!';
+  // const obj = Object();
+  // console.log(Object.prototype);
+  // console.log(obj);
+  // console.log(obj.msg); // 'hallo word!'
+  // console.log(obj.toString());
+
+  function inheritProtoType(sonType, parentType) {
+    // 1、无兼容问题
+    function FnC() {}
+    FnC.prototype = parentType.prototype;
+    let obj = new FnC();
+    sonType.prototype = obj;
+    //2、有兼容问题
+    // sonType.prototype.__proto__ = parentType.prototype;
+    //3、有兼容问题
+    // Object.setPrototypeOf(sonType.prototype, parentType.prototype);
+    Object.defineProperty(sonType.prototype, 'constructor', {
+      configurable: true,
+      enumerable: false,
+      writable: true,
+      value: sonType,
+    });
+  }
+
+  function Persions(name, age, sex) {
+    this.name = name;
+    this.age = age;
+    this.sex = sex;
+  }
+  Persions.prototype.msg = () => {
+    console.log('wo --- ---Persions');
+  };
+
+  function Students(name, age, books) {
+    Persions.call(this, name, age);
+    this.books = books;
+  }
+
+  inheritProtoType(Students, Persions);
+  const stu = new Students('lcl', 16, 'math');
+
+  // 1、hasOwnProperty：对象是否有某一个属于自己的属性（不是在原型上的属性）
+  console.log(stu.hasOwnProperty('name')); //true
+  console.log(stu.hasOwnProperty('msg')); //false
+
+  // 2、in 操作符--->判断某个属性是否在某个对象或者对象的原型上
+  console.log('name' in stu); //true
+  console.log('msg' in stu); //true
+
+  //3、for in:
+  for (const key in stu) {
+    console.log(key);
+  }
+
+  //4、instanceof：用于检测构造函数（Person、Student类）的pototype，是否出现在某个实例对象的原型链上
+  console.log('---');
+  console.log(stu instanceof Persions); //true
+  console.log(Students instanceof Object); //true
+  console.log(Persions instanceof Object); //true
+  console.log(stu instanceof Object); //true
+
+  // 5、isPrototypeOf：用于检测某个对象，是否出现在某个实例对象的原型链上
+  // Object.create :创建一个继承obj的对象
+  const obj = {
+    name: '123',
+  };
+  obj.__proto__ = stu;
+  console.log(obj);
+  const obj2 = Object.create(stu);
+  console.log(stu.isPrototypeOf(obj)); //true
+  console.log(stu.isPrototypeOf(obj2)); //true
+</script>

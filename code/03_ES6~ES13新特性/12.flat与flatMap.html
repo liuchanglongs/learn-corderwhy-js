@@ -1,0 +1,31 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-22 21:46:12
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-22 21:51:44
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 需求：以' '，弄成数组，然后合并成一个数组
+  const obj = ['lcl lcl', 'ha ha', 'hehe hehe'];
+  // flat
+  const arr = [];
+  for (const v of obj) {
+    arr.push(v.split(' '));
+  }
+  console.log(arr.flat(1)); // ['lcl', 'lcl', 'ha', 'ha', 'hehe', 'hehe']
+
+  // flatMap
+  console.log(obj.flatMap((v) => v.split(' '))); // ['lcl', 'lcl', 'ha', 'ha', 'hehe', 'hehe']
+</script>

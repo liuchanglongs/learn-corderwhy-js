@@ -1,0 +1,112 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/3/24
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<script>
+  console.log('start');
+  (function () {
+    console.log('function');
+  })()
+  setTimeout(() => console.log('timeout1'), 0);
+  setTimeout(() => {
+    Promise.resolve().then(() => console.log('promise1'));
+    console.log('timeout2');
+  }, 0);
+  setTimeout(() => {
+    Promise.resolve().then(() => console.log('promise2'));
+    console.log('timeout3');
+  }, 0);
+  new Promise((resolve) => {
+    console.log('Promise1');
+    resolve('Promise2')
+  }).then(res => {
+    console.log(res);
+  })
+
+  const p1 = () => Promise.resolve('Promise3')
+  const p2 = () => Promise.resolve('Promise4')
+  const pp = async () => {
+    console.log('pp start');
+
+    const r1 = await p1()
+    console.log(r1);
+    const r2 = await p2()
+    console.log(r2);
+    console.log('pp end');
+
+  }
+  pp()
+  console.log('end');
+
+//   1. 主线程执行
+// 'start'->'function'
+// 以下加入宏任务 h1
+//  setTimeout(() => console.log('timeout1'), 0);
+//   setTimeout(() => {
+//     Promise.resolve().then(() => console.log('promise1'));
+//     console.log('timeout2');
+//   }, 0);
+//   setTimeout(() => {
+//     Promise.resolve().then(() => console.log('promise2'));
+//     console.log('timeout3');
+//   }, 0);
+//   new Promise((resolve) => {
+//     console.log('Promise1');
+//     resolve('Promise2')
+//   }).then(res => {
+//     console.log(res);
+//   })
+//   ->Promise1-> 
+//    resolve('Promise2') 加入微任务 w1
+//   ->'pp start'
+//   ->以下加入微任务 w1
+//   const r1 = await p1()
+//   console.log(r1);
+//   const r2 = await p2()
+//   console.log(r2);
+//   console.log('pp end'); 
+//   ->'end'
+  
+//   2. 此时有微任务 w1、宏任务 h1
+//   执行微任务 w1：Promise2->Promise3->Promise4 ->'pp end'
+//   执行宏任务 h1: 'timeout1'-> 
+//   加入微任务队列 w2 
+//   Promise.resolve().then(() => console.log('promise1'));
+//   ->timeout2
+//   3. 执行微任务队列 w2 
+//   ->promise1
+//   4. 继续执行宏任务 h1:
+//   加入微任务队列 w3
+//   Promise.resolve().then(() => console.log('promise2'));
+//   ->timeout3
+//   4. 执行宏任务 w3:
+//   promise2
+  
+//   结果：
+//   start
+//   function
+//   Promise1
+//   pp start
+//   end
+//   Promise2
+//   Promise3
+//   Promise4 
+//   pp end
+//   timeout1
+//   timeout2
+//   promise1
+//   timeout3
+//   promise2
+</script>
+</body>
+
+</html>

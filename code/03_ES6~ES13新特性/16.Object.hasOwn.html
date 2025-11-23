@@ -1,0 +1,35 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-24 22:19:10
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-24 22:28:07
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  const obj = {
+    name1: 'lll',
+    // hasOwnProperty() { // 可以覆盖hasOwnProperty
+    //   console.log(123);
+    // },
+  };
+  console.log(obj);
+  console.log(obj.hasOwnProperty('name1')); // true
+  console.log(Object.prototype.hasOwnProperty('name1')); // false:检测自己对象是否有这个属性
+  console.log(Object.hasOwn(obj, 'name1'));
+
+  const obj2 = Object.create(null);
+  obj2.name1 = 'lcl';
+  console.log(obj2);
+  console.log(obj2.hasOwnProperty('name1')); // 16.Object.hasOwn.html:71 Uncaught TypeError: obj2.hasOwnProperty is not a function
+</script>

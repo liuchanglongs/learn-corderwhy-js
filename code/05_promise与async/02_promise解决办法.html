@@ -1,0 +1,57 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-04 17:57:59
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-04 18:30:06
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  // 1、利用回调函数，捕获成功、失败
+  // 2、自己设置功能函数
+  // 缺点：第一，我们需要自己来设计回调函数、回调函数的名称、回调函数的使用等；
+  //  第二，对于不同的人、不同的框架设计出来的方案是不同的，那么我们必须耐心去看别人的源码或者文档，以便可以理解它
+  // 这个函数到底怎么用
+  // 例子：买饭->支付->店家通知成功失败
+  function buy(money, successBack, errorBack) {
+    return new Promise((resolve, error) => {
+      // money给的是对的
+      if (money) {
+        setTimeout(() => {
+          let sum = 0;
+          for (let index = 0; index <= 100; index++) {
+            sum += index;
+          }
+          resolve(`成功！->${sum}`);
+        }, 2000);
+      } else {
+        error('失败！');
+      }
+    });
+  }
+
+  buy(0)
+    .then(
+      (successMsg) => {
+        console.log(successMsg);
+      }
+      // (err) => {
+      //   console.log('--');
+      //   console.log(err);
+      // }
+    )
+    .catch((errorMsg) => {
+      console.log(errorMsg);
+    });
+</script>

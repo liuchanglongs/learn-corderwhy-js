@@ -1,0 +1,55 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-31 15:17:37
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-31 16:30:59
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 原型
+  // Object.prototype.msg = function msg() {
+  //   console.log('msg');
+  // };
+
+  const obj = {};
+  // console.log(obj);
+  // obj.msg();
+  function lcl() {}
+  // lcl.msg();
+
+  // call,apply,abind的方法在哪里
+  Function.prototype.msg1 = function msg1() {
+    console.log('msg1');
+  };
+
+  lcl.msg1();
+  console.log(Function.prototype === lcl.__proto__);
+
+  console.log(Function.apply);
+
+  // call\abind\call
+  function lcl2() {
+    console.log('this', this);
+  }
+  const obj2 = {
+    fn: lcl2,
+  };
+  obj2.fn(); // obj2
+  const fn2 = obj2.fn;
+  fn2(); // window
+
+  lcl2.call(obj2); //obj2
+  lcl2.call(null); //window
+  lcl2.call(undefined); //window
+</script>

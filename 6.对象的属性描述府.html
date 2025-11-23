@@ -1,0 +1,56 @@
+<!--
+ * @Author: lcl
+ * @Date: 2025/3/24
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      const obj = {
+        name: "lcl",
+      };
+
+      var _name = obj.name;
+      Object.defineProperty(obj, "name", {
+        configurable: true,
+        enumerable: false,
+        writable: false,
+        // value: "ppp",
+        // set(val) {
+        //   console.log("set:", val);
+        //   _name = val;
+        // },
+        // get() {
+        //   return _name;
+        // },
+      });
+
+      // delete obj.name;
+      // console.log(obj);
+
+      // console.log(Object.keys(obj));
+
+      // obj.name = "lm";
+      // console.log(obj);
+
+      // obj.name = "100";
+      // obj.name = "100";
+      // obj.name = "100";
+      // console.log(obj.name);
+
+      console.log(Object.getOwnPropertyDescriptor(obj, "name"));
+
+      // console.log(Object.getOwnPropertyDescriptors(obj));
+
+      // Object.preventExtensions(obj);
+      // obj.a = "oo";
+      // console.log(obj);
+    </script>
+  </body>
+</html>

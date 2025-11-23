@@ -1,0 +1,49 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-10 19:44:55
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-10 22:32:28
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  const deepCopy = (obj) => {
+    return JSON.parse(JSON.stringify(obj));
+  };
+  console.log(deepCopy({}));
+
+  // 函数不能拷贝
+  const fn = () => {};
+  try {
+    console.log(deepCopy(fn));
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(deepCopy({ fn: fn })); //{}
+  // Symbol不能拷贝
+  try {
+    console.log(deepCopy(Symbol(123)));
+  } catch (error) {
+    console.log(error);
+  }
+  console.log(deepCopy({ fn: Symbol(123) })); //{}
+
+  const objs = {
+    name: 'lcl',
+    age: 15,
+    // dd: new Set([1, 2, 3, 5]),
+    // fn: fn,
+    sysbol: Symbol(12),
+  };
+  console.log(JSON.parse(JSON.stringify(objs)));
+</script>

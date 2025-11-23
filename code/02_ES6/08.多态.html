@@ -1,0 +1,30 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-31 13:47:51
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-08-31 13:50:40
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 多态（英语：polymorphism）指为不同数据类型的实体提供统一的接口，或使用一个单一的符号来表示多个不同的类型。
+  // 个人的总结：不同的数据类型进行同一个操作，表现出不同的行为，就是多态的体现。
+  var a = 12;
+  a = {};
+  a = [];
+  function acount(a, b) {
+    console.log(a + b);
+  }
+  acount(1, 2);
+  acount(1, '0');
+</script>

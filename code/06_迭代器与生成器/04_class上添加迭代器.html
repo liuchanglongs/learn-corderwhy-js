@@ -1,0 +1,66 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-05 17:58:52
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-05 18:22:29
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 要求创建的对象全都可迭代
+  class Persion {
+    constructor(name, age, height, sex) {
+      this.name = name;
+      this.age = age;
+      this.height = height;
+      this.sex = sex;
+    }
+    [Symbol.iterator]() {
+      // const arry = Object.keys(this);
+      // const arry = Object.values(this);
+      const arry = Object.entries(this);
+      let index = 0;
+      return {
+        next: () => {
+          if (index < arry.length) {
+            return {
+              done: false,
+              value: arry[index++],
+            };
+          } else {
+            return {
+              done: true,
+              value: undefined,
+            };
+          }
+        },
+        return() {
+          console.log('中断了');
+          return { done: true, value: undefined };
+        },
+      };
+    }
+  }
+
+  const p1 = new Persion('lcl', 18, 180, '男');
+  console.log(p1);
+
+  for (const iterator of p1) {
+    // if (iterator[1] === 18) {
+    //   // break;
+
+    // }
+    throw new Error('--->');
+    console.log(iterator);
+  }
+</script>

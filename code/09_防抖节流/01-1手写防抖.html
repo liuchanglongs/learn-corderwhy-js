@@ -1,0 +1,82 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 15:38:52
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/4/8
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input />
+    <button class="cancle">取消</button>
+  </body>
+</html>
+<script>
+  // 设计思想：一个函数做一件事，一个变量控制一种状态
+  const deBounce = (fn, time, immediate = false) => {
+    // 控制定时器
+    let timeout = null;
+    // 控制是否是每次输入得第一个字符
+    let isInvoke = true;
+    const deBounce = function (...arg) {
+      // 3、立即执行功能:每次连续输入就执行首个字母请求一次
+      if (immediate && isInvoke) {
+        fn.apply(this, arg);
+        isInvoke = false;
+        // 不建议修改immediate：1、用户传进来得。2、一个变量控制一种状态
+      }
+      // 清除上次得函数，防止重复执行
+      if (timeout) clearTimeout(timeout);
+      // 1、防抖函数功能
+      // 为啥return 一个新得函数：1、利用闭包 2、return fn返回在定时器里面那个函数得。
+      timeout = setTimeout(() => {
+        timeout = null;
+        isInvoke = true;
+        fn.apply(this, arg);
+      }, time);
+    };
+
+    // 2、计时期间取消函数功能
+    // 设计思想：添加到return得deBounce函数上，方便使用
+    deBounce.cancel = () => {
+      if (timeout) clearTimeout(timeout);
+      timeout = null;
+      isInvoke = true;
+    };
+    return deBounce;
+  };
+
+  const request = deBounce(
+    function (arg) {
+      console.log(this.value, arg);
+    },
+    2000,
+    true
+  );
+
+  // 请求
+  const inputRef = document.querySelector("input");
+  inputRef.oninput = request;
+
+  // 取消
+  const cancleRef = document.querySelector(".cancle");
+  cancleRef.onclick = function () {
+    request.cancel();
+  };
+
+  // const myDeBounce = deBounce(function (name, age) {
+  //   console.log(name, age);
+  //   // 4、需要：拿到这个函数得返回值
+  //   // 方法一：回调函数
+  //   // 方法二：promise
+  // });
+  // myDeBounce('lcl', 21);
+</script>

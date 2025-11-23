@@ -1,0 +1,57 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-08 14:54:26
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-19 10:05:06
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  // function foo() {
+  //   console.log('1-:', msg);
+  //   debugger;
+  //   var msg = 'foo';
+  //   console.log('2-:', msg);
+  //   return function bar() {
+  //     console.log('3-:', msg);
+  //     var msg = 'bar';
+  //     console.log('4-:', msg);
+  //   };
+  // }
+  // var bar = foo();
+  // bar();
+
+  let msg = 'globel';
+  function foo() {
+    console.log('foo-msg:', msg); // undefined
+    var msg = 'foo';
+    console.log('foo-msg:', msg); // foo
+  }
+  foo();
+
+  function bar() {
+    // console.log('bar-msg:', msg); // 02_作用域.html:80 Uncaught ReferenceError: Cannot access 'msg' before initialization
+    let msg = 'bar';
+    console.log('bar-msg:', msg); // bar
+  }
+  bar();
+
+  const obj = {
+    fn: function () {
+      var msg = 'fn';
+      console.log('--');
+      foo();
+    },
+  };
+  obj.fn();
+</script>

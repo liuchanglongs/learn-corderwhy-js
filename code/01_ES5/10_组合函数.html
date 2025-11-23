@@ -1,0 +1,48 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-22 21:24:38
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-25 16:30:07
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function sum1(num) {
+    return num + 5;
+  }
+  function sum2(num) {
+    return num * 2;
+  }
+  function compose(...fns) {
+    // 传入函数
+    if (fns.length === 0) return;
+    for (let index = 0; index < fns.length; index++) {
+      if (typeof fns[index] !== 'function') {
+        // 抛出异常、结束执行
+        throw new Error(`index position ${index} is not function`);
+      }
+    }
+
+    // 依次执行函数
+    return function (...args) {
+      let sum = fns[0](Number(args));
+      for (let index = 1; index < fns.length; index++) {
+        sum = fns[index](sum);
+      }
+      return sum;
+    };
+  }
+  const fn = compose(sum1, sum2);
+
+  console.log(fn(5));
+</script>

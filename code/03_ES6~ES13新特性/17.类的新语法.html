@@ -1,0 +1,53 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-24 22:33:49
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-24 22:45:39
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  class Persion {
+    // 实例属性
+    // 公共
+    he = 'hehehe';
+    // 私有
+    #he2 = 'hehehe2';
+    // 类属性
+    static #h3 = 'h3';
+    static h3 = 'h3';
+
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+      this.fn1 = () => {
+        console.log('fn');
+      };
+    }
+    // 公有方法
+    fn() {
+      console.log(fn);
+    }
+
+    // 静态代码块:类创建的时候执行一次
+    static {
+      console.log(11);
+    }
+  }
+
+  const p1 = new Persion('lcl', 18);
+  console.log(p1);
+  console.log(p1.h3, Persion.h3); //undefined 'h3'
+  // console.log(Persion.#h3); // Private field '#h3' must be declared in an enclosing class
+  // console.log(p1.#he2); //Private field '#he2' must be declared in an enclosing class
+</script>

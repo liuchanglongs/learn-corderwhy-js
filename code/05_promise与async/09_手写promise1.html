@@ -1,0 +1,110 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-11 14:01:11
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/4/2
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  /*
+   * @Autor: lcl
+   * @Version: 2.0
+   * @Date: 2022-10-11 14:01:11
+   * @LastEditors: lcl
+   * @LastEditTime: 2022-10-11 14:15:06
+   * @Description: lcl
+   */
+  // 设计要符合规范：Promise
+  // 1、架构设计
+  // 2、状态设计：pending、fulfilled、rejected
+  // 3、resolve、reject函数设计：执行微任务队列
+  // 4、实例方法then方法的实现
+  const pending = "pending";
+  const fulfilled = "fulfilled";
+  const rejected = "rejected";
+
+  class Lpromise {
+    constructor(fn) {
+      let status = pending;
+      let value = undefined;
+      let reason = undefined;
+
+      const resolve = (...value) => {
+        if (status === pending) {
+          status = fulfilled;
+          // 加入微任务：让实例的then方法在执行
+          console.log("----");
+
+          queueMicrotask(() => {
+            value = value;
+            this.onfulfilled && this.onfulfilled(...value);
+          });
+        }
+      };
+
+      const reject = (...reason) => {
+        if (status === pending) {
+          status = rejected;
+          // 加入微任务：让实例的then方法在执行
+          queueMicrotask(() => {
+            reason = reason;
+            this.onrejected(...reason);
+          });
+        }
+      };
+
+      fn(resolve, reject);
+
+      this.then = function (onfulfilled, onrejected) {
+        this.onfulfilled = onfulfilled;
+        this.onrejected = onrejected;
+      };
+    }
+  }
+  const promise = new Lpromise((resolve, reject) => {
+    resolve("resolve");
+    // reject("reject");
+  }).then((res) => {
+    console.log(res);
+  });
+  // console.log(111);
+
+  // promise.then(
+  //   (res) => {
+  //     console.log(res);
+  //   },
+  // (err) => {
+  //   console.log(err);
+  // }
+  // );
+
+  // promise.then(
+  //   (res) => {
+  //     console.log(res);
+  //   },
+  //   (err) => {
+  //     console.log(err);
+  //   }
+  // );
+  // console.log(promise);
+
+  // const promise1 = new Promise(() => {});
+  // promise1.then(
+  //   (value) => {
+  //     console.log(value);
+  //   },
+  //   (reason) => {}
+  // );
+</script>

@@ -1,0 +1,35 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-08-24 14:55:00
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/3/26
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function fn() {}
+  console.log(fn.prototype);
+  // console.log(Object.keys(fn.prototype)); //constructor 没有
+  // console.log(Object.getOwnPropertyDescriptors(fn.prototype));
+  fn.prototype = {
+    name: "ppp",
+  };
+  // // 设置属性
+  // Object.defineProperty(fn.prototype, 'constructor', {
+  //   configurable: true,
+  //   enumerable: false,
+  //   writable: true,
+  //   value: fn,
+  // });
+  // console.log(fn.prototype);
+</script>

@@ -1,0 +1,121 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 15:38:52
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/4/8
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input />
+    <button class="cancle">取消</button>
+  </body>
+</html>
+<script>
+  let s1 = Symbol("aaa");
+  let s2 = Symbol("bbb");
+
+  const obj = {
+    name: "why",
+    age: 18,
+    friend: {
+      name: "james",
+      address: {
+        city: "广州",
+      },
+    },
+    // 数组类型
+    hobbies: ["abc", "cba", "nba"],
+    // 函数类型
+    foo: function (m, n) {
+      console.log("foo function");
+      console.log("100代码逻辑");
+      return 123;
+    },
+    // Symbol作为key和value
+    [s1]: "abc",
+    s2: s2,
+    // Set/Map
+    set: new Set(["aaa", "bbb", "ccc"]),
+    map: new Map([
+      ["aaa", "abc"],
+      ["bbb", "cba"],
+    ]),
+  };
+
+  /**
+   * 1. 处理类型
+   *    Set、Map、Date 等用instanceof (instanceof  不能用来判断数组与对象)
+   *    symbol\function
+   *    判断其他类型(除了数组、对象)
+   * 2. 处理引用类型：对象、数组
+   * 3. 处理对象、数组中key为symbol
+   *     递归处理值，一层一层的复制
+   * 3. 记录是否拷贝，防止几个对象、数组相互引用导致无限递归
+   *  只要拷贝过就存一个相同的值
+   *
+   * */
+  const isObject = (data) => {
+    const type = typeof data;
+    return (type == "object" || type === "function") && data != null;
+  };
+  function deepClone(origin, weakMap = new WeakMap()) {
+    if (origin instanceof Set) {
+      return new Set([...origin]);
+    } else if (origin instanceof Map) {
+      return new Map([...origin]);
+    } else if (typeof origin === "function") {
+      return origin;
+    } else if (typeof origin === "symbol") {
+      return Symbol(origin.description);
+    } else if (!isObject(origin)) {
+      return origin;
+    }
+    const data = Array.isArray(origin) ? [] : {};
+    if (weakMap.has(origin)) {
+      return weakMap.get(origin);
+    }
+
+    weakMap.set(origin, new origin.constructor());
+
+    // 复制数组对象
+    for (const key in origin) {
+      data[key] = deepClone(origin[key], weakMap);
+    }
+    // 对象中对Symbol的key进行特殊的处理
+    const symbolkeys = Object.getOwnPropertySymbols(origin);
+    for (const key of symbolkeys) {
+      data[key] = deepClone(symbolkeys, weakMap);
+    }
+    return data;
+  }
+
+  // const newobj = deepClone(obj);
+  // console.log(newobj);
+  // console.log(obj.friend.address == newobj.friend.address);
+
+  // const news1 = deepClone(s1);
+  // const news2 = s1;
+  // console.log(news1 == s1);
+  // console.log(news2 == s1);
+
+  // // 解决：使用WeekMap记录拷贝的数据
+  // // 无限套娃对象：出现原因，点击浏览器点击显示key值，会触发get函数，所以就无限套娃
+  const objs1 = {};
+  const objs2 = {};
+  objs1.objs2 = objs2;
+  objs2.objs1 = objs1;
+  // // console.log(objs1);
+  // // 面试题：怎么克隆这个对象？解决：记录是否拷贝过
+  console.log(deepClone(objs1) === objs1);
+  console.log(objs1);
+</script>

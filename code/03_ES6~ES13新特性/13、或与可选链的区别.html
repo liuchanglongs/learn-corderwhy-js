@@ -1,0 +1,42 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-22 22:07:04
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-22 22:22:53
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  console.log('' || '或'); // 或
+  console.log('' ?? '可选链'); // ''
+
+  console.log(null || '或'); // 或
+  console.log(null ?? '可选链'); // '可选链'
+
+  console.log(undefined || '或'); // 或
+  console.log(undefined ?? '可选链'); // '可选链'
+
+  const fn = () => {
+    console.log(111);
+    return 56;
+  };
+  const obj = {
+    name: {
+      lcl: {
+        // fn,
+      },
+    },
+  };
+  obj?.name?.lcl?.fn?.();
+  console.log(obj?.name?.lcl?.fn?.());
+</script>

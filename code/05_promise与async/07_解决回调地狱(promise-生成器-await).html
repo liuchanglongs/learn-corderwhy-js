@@ -1,0 +1,95 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-05 23:16:26
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-06 23:46:27
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function fnRequest(data) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 1000);
+    });
+  }
+  // 1、链式解决->代码不优雅
+  // fnRequest('第一次')
+  //   .then((res) => {
+  //     console.log(res);
+  //     return fnRequest('第二次');
+  //   })
+  //   .then((res) => {
+  //     console.log(res);
+  //     return fnRequest('第三次');
+  //   })
+  //   .then((res) => {
+  //     console.log(res);
+  //   });
+
+  //2、 使用生成器，利用迭代器调用
+  // 想要的代码
+  function* lcl(data) {
+    const res1 = yield fnRequest('第一次');
+    console.log(res1);
+
+    const res2 = yield fnRequest('第二次');
+    console.log(res2);
+
+    const res3 = yield fnRequest('第三次');
+    console.log(res3);
+
+    const res4 = yield fnRequest('第4次');
+    console.log(res4);
+  }
+
+  const generates = lcl();
+  generates.next().value.then((res1) => {
+    console.log(res1);
+    generates.next(res1).value.then((res2) => {
+      generates.next(res2).value.then((res3) => {
+        generates.next(res3);
+      });
+    });
+  });
+
+  // 优化生成器的代码
+  // function actions(fn) {
+  //   const generator = fn();
+  //   function deepLoop(data) {
+  //     const { value, done } = generator.next(data);
+  //     if (done) return;
+  //     value.then((res) => {
+  //       deepLoop(res);
+  //     });
+  //   }
+  //   deepLoop();
+  // }
+  // actions(lcl);
+
+  // 3、async await
+  // async function lcl(data) {
+  //   const res1 = await fnRequest('第一次');
+  //   console.log(res1);
+  //   console.log(222);
+  //   const res2 = await fnRequest('第二次');
+  //   console.log(res2);
+
+  //   const res3 = await fnRequest('第三次');
+  //   console.log(res3);
+  // }
+  // console.log(111111);
+  // lcl();
+  // console.log(333333);
+</script>

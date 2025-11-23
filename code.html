@@ -1,0 +1,82 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 15:38:52
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/4/9
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <input />
+    <button class="on">订阅</button>
+    <button class="emit">发布</button>
+  </body>
+</html>
+<script>
+  class LeventBus {
+    constructor() {
+      this.data = {};
+    }
+    on(name, ...arg) {
+      const event = this.data[name];
+      if (!event) {
+        this.data[name] = arg;
+      } else {
+        this.data[name] = [...event, ...arg];
+      }
+    }
+    emit(name, ...arg) {
+      const event = this.data[name];
+      if (!event) return;
+      for (const fn of event) {
+        fn(...arg);
+      }
+    }
+    off(name, ...arg) {
+      let event = this.data[name];
+      if (event.length) {
+        this.data[name] = event.filter((fn) => {
+          if (!arg.includes(fn)) {
+            return fn;
+          }
+        });
+      } else {
+        delete this.data[name];
+      }
+    }
+  }
+
+  const eventBus = new LeventBus();
+
+  const button = document.querySelector(".emit");
+  button.onclick = function () {
+    console.log("button");
+    eventBus.emit("one", "lcl", 19);
+    eventBus.emit("two", "two", "two");
+  };
+  const one = (...arg) => {
+    console.log(...arg);
+  };
+
+  const two = (...arg) => {
+    console.log("two", ...arg);
+  };
+  const button1 = document.querySelector(".on");
+
+  button1.onclick = function () {
+    eventBus.on("one", one);
+    eventBus.on("two", two);
+  };
+  setTimeout(() => {
+    eventBus.off("two", two);
+  }, 5000);
+</script>

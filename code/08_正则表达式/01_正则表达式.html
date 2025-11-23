@@ -1,0 +1,74 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-07 17:36:13
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-08 11:08:32
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  const re1 = new RegExp('aa', 'ig');
+  const re2 = /aa/gi;
+  // 正则方法
+  // 1、test()：测试是否符合规则
+  // console.log(re1.test('aa'));
+  // 2、exec()：匹配到，返回一个数组
+  // console.log(re1.exec('aa'));
+
+  const str = 'lclaalcl';
+  // 字符串方法
+  // console.log(str.replace(re2, 'l----l'));
+
+  // 词边界:两边空格、间隔符号除外：，。
+  const str2 = 'now time ,。12:00。, number is12:11 and 12';
+  // console.log(str2.match(/\b\d\d:\d\d\b/gi));
+
+  // .:匹配任意一个字符
+  // （）：分组
+  // ？：0个或者一个
+
+  // 转义字符
+  const fileNames = ['abc.js', 'a.java', 'c.jsx', 'b.html', 'c.jsx', 'ac.js'];
+  const arry = fileNames.filter((v) => {
+    if (/\.jsx?$/.test(v)) {
+      return v;
+    }
+  });
+  console.log(arry);
+
+  console.log(/^1[3456789]\d{9}/.test('13170561455'));
+  console.log(/d/);
+
+  // 匹配标签
+  const tags = '<span>hahaha</span>, <p>hehehe</p>';
+
+  console.log(tags.match(/<\/?[a-z][a-z0-9]*>/gi));
+
+  // 贪婪与惰性模式
+  const msg = '我最喜欢两本书,一本《哈哈哈》，一本《hehehw》';
+  // console.log(msg.match(/《.+》/g));
+  // console.log(msg.match(/《.+?》/g));
+
+  // 捕获组
+  console.log();
+  for (const iterator of msg.matchAll(/《(?<lcl>.+?)》/g)) {
+    // console.log(iterator);
+    // console.log(iterator.groups);
+  }
+
+  //或
+  const stra = 'laalaaa';
+  console.log(stra.match(/a{2,3}/g));
+  console.log(stra.match(/aa|aaa}/g));
+</script>

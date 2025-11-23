@@ -1,0 +1,37 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-05 23:12:30
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-10-05 23:15:11
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  function fnRequest(data) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(data);
+      }, 1000);
+    });
+  }
+  // 回调地狱：代码层级深不易阅读维护
+  fnRequest('第一次').then((res) => {
+    console.log(res);
+    fnRequest('第二次').then((res) => {
+      console.log(res);
+      fnRequest('第三次').then((res) => {
+        console.log(res);
+      });
+    });
+  });
+</script>

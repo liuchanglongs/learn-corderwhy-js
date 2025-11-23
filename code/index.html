@@ -1,0 +1,48 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-19 09:26:01
+ * @LastEditors: lcl
+ * @LastEditTime: 2023-03-24 10:37:49
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+
+<script>
+  function Dogs(name, sex, age) {
+    this.name = name;
+    this.age = age;
+    this.sex = sex;
+  }
+  Dogs.prototype.getNmae = function () {
+    console.log(this.name);
+  };
+  let dogs1 = new Dogs('花花', '母', 18);
+  dogs1.toString = function () {
+    return (
+      'Dogs[name=' + this.name + ',age=' + this.age + ',sex=' + this.sex + ']'
+    );
+  };
+
+  // toString
+  console.log(':::', dogs1);
+  console.log(dogs1.toString());
+
+  console.log(JSON.stringify({ name: 'lcl' }.toString()));
+
+  console.log(new String());
+
+  // const obj = { name: 'lcl', name: '456' };
+  // for (const iterator of obj) {
+  //   console.log(iterator);
+  // }
+</script>

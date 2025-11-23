@@ -1,0 +1,69 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-10-08 11:20:11
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2025/4/8
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  //1、 /n分隔
+  // 2、拿出：[时间] 歌词
+  // 转成：{time:'毫秒', content:''}
+  const musicStr = `[00:00.000] 作词 : Charlie Puth/Jacob Kasher Hindlin\n[00:01.000] 作曲 : Charlie Puth/Jacob Kasher Hindlin\n[00:03.617] Oh, I'm such a loser\n[00:06.284] How'd I ever lose her?\n[00:09.087] Oh, baby, I must've been out of my mind\n[00:12.669] Now, I-I'm a loser\n[00:16.064] Why'd I have to lose her?\n[00:18.300] I'll never recover, I'll never be fine\n[00:22.022] 'Cause I-I\n[00:23.072]\n[00:24.416] I just might get a little too drunk\n[00:26.133] So, I won't think about us (Uh)\n[00:28.962] I don't think about what (Uh)\n[00:31.239] We could have been, and\n[00:33.578] I stay up, like, three or four nights\n[00:35.424] So I won't dream about us (Uh)\n[00:38.193] I wake up with no luck (No)\n[00:40.713] I just can't win\n[00:41.853]\n[00:42.364] I should've seen it all along (Uh-ah)\n[00:44.402] She was a one in a million (Uh-ah)\n[00:46.978] It hurts whenever someone says her name (Someone says her name)\n[00:51.998] When wе were goin' off and on (Uh-ah)\n[00:53.801] I guess I rеally played it wrong (Ah-uh)\n[00:56.567] I should’ve never let her slip away\n[00:59.725]\n[01:00.213] Oh, I'm such a loser\n[01:02.830] How'd I ever lose her?\n[01:05.499] Oh, baby, I must've been out of my mind\n[01:09.066] Now, I-I'm a loser\n[01:12.495] Why'd I have to lose her?\n[01:14.887] I'll never recover, I'll never be fine\n[01:18.477] 'Cause I-I\n[01:19.290]\n[01:19.969] Uh, I just might been a little too gone\n[01:22.616] When she needed somebody (Uh)\n[01:25.067] Up against her body (Woah) at 2 A.M\n[01:29.784] Yeah, now I keep lyin' to myself\n[01:32.024] But she's just joking probably (She's joking probably)\n[01:35.087] She'll probably call me and we'll be us again\n[01:38.084]\n[01:38.717] I should've seen it all along (Uh-ah)\n[01:41.221] She was a one in a million (Ah-uh)\n[01:43.461] Now she's in love, and I'm in second place (Damn)\n[01:46.728]\n[01:47.015] No, I'm such a loser\n[01:49.928] How'd I ever lose her? (Lose her)\n[01:52.682] Oh, baby, I must've been out of my mind (-ind)\n[01:56.066] Now, I-I'm a loser\n[01:59.308] Why'd I have to lose her? (Her)\n[02:01.978] I'll never recover, I'll never be fine (Fine)\n[02:05.621] 'Cause I-I, uh\n[02:06.575]\n[02:07.530] Oh my, my, my, my\n[02:10.244] Oh my, my, my, my\n[02:12.714] Oh my, my, my, my, I'm a lo-o-o-o-ser (Yeah, I say)\n[02:16.835] Oh my, my, my, my\n[02:19.493] Oh my, my, my, my (I)\n[02:21.854] Oh my, my, my, my, I'm a lo-o-o-o-ser\n[02:24.956]\n[02:26.451] Tell me God is real\n[02:28.195] Do you think about me still\n[02:31.064] Or am I livin' for nothing?\n[02:35.876] Don't know where it went\n[02:37.687] Wrong but I'll just take the hint\n[02:40.534] It's gonna take some adjusting\n[02:42.911]\n[02:43.696] Oh, I'm such a loser\n[02:46.410] How'd I ever lose her?\n[02:49.143] Oh, baby, I must've been out of my mind\n[02:52.674] Now, I-I'm a loser (Oh!)\n[02:56.087] Why'd I have to lose her? (I'll never)\n[02:58.535] I'll never recover, I'll never be fine (Oh, baby, I)\n[03:01.941] 'Cause I-I'm a loser\n[03:02.755]\n[03:04.233] Oh my, my, my, my\n[03:06.704] Oh my, my, my, my (Ah, hey)\n[03:08.936] Oh my, my, my, my, I'm a lo-o-o-o-ser (Yeah, I say)\n[03:13.896] Oh my, my, my, my (Oh, when I say)\n[03:16.103] Oh my, my, my, my (When I say)\n[03:18.235] Oh my, my, my, my, I'm a lo-o-o-o-ser\n`;
+
+  const handleTime = (timeStr) => {
+    const config = /[1-9]\d{2}|[1-9]\d|[1-9]/g;
+    let m = 0;
+    let s = 0;
+    let hs = 0;
+
+    if (!/00/.test(timeStr.m)) {
+      m = 60 * timeStr.m.match(config) * 1000;
+    } else {
+      m = 0;
+    }
+    if (!/00/.test(timeStr.s)) {
+      console.log("---");
+      s = timeStr.s.match(config) * 1000;
+    } else {
+      s = 0;
+    }
+    if (!/000/.test(timeStr.s)) {
+      hs = Number(timeStr.hs.match(config));
+    } else {
+      hs = 0;
+    }
+    return m + s + hs;
+  };
+
+  const actionFn = (str) => {
+    const data = [];
+    const arry = str.split("\n");
+    for (const item of arry) {
+      // console.log(item);
+      const config = /\[(?<m>\d{1,2}):(?<s>\d{1,2})\.(?<hs>\d{1,3})\]/;
+      const result = item.match(config);
+      if (result) {
+        const obj = {};
+        obj.time = handleTime(result.groups);
+        obj.content = item.replace(config, "").trim();
+        obj.str = item;
+        data.push(obj);
+      }
+    }
+    console.log(data);
+    return data;
+  };
+  actionFn(musicStr);
+</script>

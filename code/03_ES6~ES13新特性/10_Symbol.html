@@ -1,0 +1,34 @@
+<!--
+ * @Autor: lcl
+ * @Version: 2.0
+ * @Date: 2022-09-20 21:50:02
+ * @LastEditors: lcl
+ * @LastEditTime: 2022-09-20 22:00:36
+ * @Description: lcl
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+</html>
+<script>
+  const sy1 = Symbol('name');
+  const obj = {
+    name: 'lcl',
+  };
+  obj[sy1] = 'lcl';
+
+  console.log(obj);
+  // 创建相同得symbol
+  const sy2 = Symbol.for('lcl');
+  const sy3 = Symbol.for('lcl');
+  console.log(sy2 == sy3); // true
+  console.log(sy2 === sy3); //  true
+  // 获取Symbol.for创建得key
+  console.log(Symbol.keyFor(sy2));
+</script>
