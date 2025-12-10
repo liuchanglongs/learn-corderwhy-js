@@ -23,21 +23,23 @@
     return new Promise((resolve, reject) => {
       const iterator = generatorFn()
       const deep = (arg, next = 'next') => {
-       try {
-        const iteratorData = iterator[next](arg);
-        const { done, value } = iteratorData;
-        if (!done) {
-          value.then(res=>{
-            deep(res)
-          }, err=>{
-            deep(err,'throw')
-          })
-        }else{
-          resolve(value)
-        } 
-       } catch (error) {
-        reject(error)
-       } 
+        try {
+          const iteratorData = iterator[next](arg);
+          const { done, value } = iteratorData;
+          if (!done) {
+            console.log("value", value);
+
+            value.then(res => {
+              deep(res)
+            }, err => {
+              deep(err, 'throw')
+            })
+          } else {
+            resolve(value)
+          }
+        } catch (error) {
+          reject(error)
+        }
       }
       deep()
     })
@@ -55,7 +57,7 @@
         return results
       } catch (error) {
         console.log(error);
-        
+
         return error
       }
     }
