@@ -8,13 +8,16 @@
 -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body></body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body></body>
+
 </html>
 <script>
   // 生成器：更加灵活的控制函数什么时候继续执行、暂停执行的一个函数。
@@ -23,51 +26,132 @@
   // 2、代码执行由yield控制，遇到yield中断（暂停）执行
   // 3、函数执行返回一个迭代器对象，调用next()方法执行
 
-  function* generatorFn(name1) {
-    console.log(111 + name1);
-    console.log(222 + name1);
-    const name2 = yield "aaa55";
-    return "aaa";
-    console.log(333 + name2);
-    console.log(444 + name2);
-    const name3 = yield "bbb";
-    console.log(555 + name3);
-    console.log(666 + name3);
-    yield "ccc";
-    return undefined; // 结束生成器的遍历，不是结束函数执行
-  }
+  // function* generatorFn(name1) {
+  //   console.log(111 + name1);
+  //   console.log(222 + name1);
+  //   const name2 = yield "aaa55";
+  //   return "aaa";
+  //   console.log(333 + name2);
+  //   console.log(444 + name2);
+  //   const name3 = yield "bbb";
+  //   console.log(555 + name3);
+  //   console.log(666 + name3);
+  //   yield "ccc";
+  //   return undefined; // 结束生成器的遍历，不是结束函数执行
+  // }
 
   // console.log(generatorFn.prototype[Symbol.iterator]()); //原型上自动生成迭代器
 
-  const generateOne = generatorFn("第一次");
+  // const generateOne = generatorFn("第一次");
+
   // 1、执行：执行到yield结束迭代遍历，但是注意每次yield的当行前面的代码不执行，当行后面的代码执行
+  // function* generatorFn(name1) {
+  //   console.log(111);
+  //   console.log(222);
+  //   const name2 = yield "aaa";
+  //   console.log(333);
+  //   console.log(444);
+  //   const name3 = yield "bbb";
+  //   console.log(555);
+  //   console.log(666);
+  //   yield "ccc";
+  //   return undefined; // 结束生成器的遍历，不是结束函数执行
+  // }
+  // const generateOne = generatorFn("第一次");
   // generateOne.next(); //111 222
   // generateOne.next(); //333 444
   // generateOne.next(); //555 666
 
   // 2、生成器传递参数：next()的返回值
-  console.log(generateOne.next()); //{value: 'aaa', done: false}
-  console.log(generateOne.next()); //{value: 'bbb', done: false}
-  console.log(generateOne.next()); //{value: 'undefined', done: true}
+  // function* generatorFn(name1) {
+  //   console.log(111);
+  //   console.log(222);
+  //   const name2 = yield "aaa";
+  //   console.log(333);
+  //   console.log(444);
+  //   const name3 = yield "bbb";
+  //   console.log(555);
+  //   console.log(666);
+  //   yield "ccc";
+  //   return undefined; // 结束生成器的遍历，不是结束函数执行
+  // }
+  // const generateOne = generatorFn("第一次");
+  // console.log(generateOne.next()); //{value: 'aaa', done: false}
+  // console.log(generateOne.next()); //{value: 'bbb', done: false}
+  // console.log(generateOne.next()); //{value: 'ccc', done: true}
+  // console.log(generateOne.next()); //{value: 'undefined', done: true}
 
   // 3、生成器直接结束：直接return
-  // console.log(generateOne.next()); //{value: 'aaa', done: true}
-  // console.log(generateOne.next()); //{value: undefined, done: true}
+  // function* generatorFn(name1) {
+  //   console.log(111);
+  //   console.log(222);
+  //   const name2 = yield "aaa";
+  //   return "return直接结束生成器";
+  //   console.log(333);
+  //   console.log(444);
+  //   const name3 = yield "bbb";
+  //   console.log(555);
+  //   console.log(666);
+  //   yield "ccc";
+  //   return undefined; // 结束生成器的遍历，不是结束函数执行
+  // }
+  // const generateOne = generatorFn("第一次");
+  // console.log(generateOne.next()); //{value: 'aaa', done: false}
+  // console.log(generateOne.next()); //{value: "return直接结束生成器", done: true}
   // console.log(generateOne.next()); //{value: undefined, done: true}
 
   // 4、生成器控制每个阶段传值
+  // function* generatorFn(name1) {
+  //   console.log(111);
+  //   console.log(222);
+  //   const name2 = yield "aaa";
+  //   console.log(333, name2);
+  //   console.log(444, name2);
+  //   const name3 = yield "bbb";
+  //   console.log(555, name3);
+  //   console.log(666, name3);
+  //   yield "ccc";
+  //   return undefined; // 结束生成器的遍历，不是结束函数执行
+  // }
+  // const generateOne = generatorFn("第一次");
   // generateOne.next(); //第一次利用函数传值
   // generateOne.next('第二次');
   // generateOne.next('第三次');
   // console.log(generateOne.next());
 
   // 5、调return()：中断生成器，之后的next不会执行
+  // function* generatorFn(name1) {
+  //   console.log(111);
+  //   console.log(222);
+  //   const name2 = yield "aaa";
+  //   console.log(333, name2);
+  //   console.log(444, name2);
+  //   const name3 = yield "bbb";
+  //   console.log(555, name3);
+  //   console.log(666, name3);
+  //   yield "ccc";
+  //   return undefined; // 结束生成器的遍历，不是结束函数执行
+  // }
+  // const generateOne = generatorFn("第一次");
   // console.log(generateOne.next());
   // console.log(generateOne.return('第二次'));
   // console.log(generateOne.next('第三次'));
 
   // 6、掉throw中断生成器，没有try  catch捕获会报错
-  // console.log(generateOne.next());
-  // console.log(generateOne.throw(new Error("error")));
-  // console.log(generateOne.next("第三次"));
+  function* generatorFn(name1) {
+    console.log(111);
+    console.log(222);
+    const name2 = yield "aaa";
+    console.log(333, name2);
+    console.log(444, name2);
+    const name3 = yield "bbb";
+    console.log(555, name3);
+    console.log(666, name3);
+    yield "ccc";
+    return undefined; // 结束生成器的遍历，不是结束函数执行
+  }
+  const generateOne = generatorFn("第一次");
+  console.log(generateOne.next());
+  console.log(generateOne.throw(new Error("error")));
+  console.log(generateOne.next("第三次"));
 </script>
